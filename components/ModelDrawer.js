@@ -55,11 +55,12 @@ export default function ModelDrawer({ model, onClose }) {
         </div>
 
         {/* Club image */}
-        <div className="aspect-[16/9] bg-slate-100 overflow-hidden">
+        <div className="bg-slate-50 border-b border-slate-100 flex items-center justify-center" style={{ minHeight: '240px', maxHeight: '300px' }}>
           <img
             src={model.imageUrl || '/placeholder.svg'}
             alt={model.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain p-6"
+            style={{ maxHeight: '300px' }}
             onError={e => { e.currentTarget.src = '/placeholder.svg' }}
           />
         </div>
@@ -102,10 +103,8 @@ export default function ModelDrawer({ model, onClose }) {
                 <svg className="w-8 h-8 text-slate-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                <p className="text-slate-500 text-sm font-medium">No indicators documented yet</p>
-                <p className="text-slate-400 text-xs mt-1">
-                  Add to <code className="bg-slate-200 px-1 py-0.5 rounded text-slate-600">fakeIndicators</code> in models.json
-                </p>
+                <p className="text-slate-500 text-sm font-medium">Not yet documented</p>
+                <p className="text-slate-400 text-xs mt-1">Staff can add indicators via the admin panel</p>
               </div>
             )}
           </section>
