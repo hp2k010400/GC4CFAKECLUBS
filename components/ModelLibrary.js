@@ -6,6 +6,21 @@ import ModelDrawer from './ModelDrawer'
 
 const PAGE_SIZE = 24
 
+const TYPE_MAP = {
+  'driver shaft': 'Driver Shaft',
+  'fairway wood': 'Fairway Wood',
+  'fairway woods': 'Fairway Wood',
+  'individual iron': 'Individual Iron',
+  'individual irons': 'Individual Iron',
+  'irons': 'Irons',
+  'wedge': 'Wedge',
+}
+
+function normalizeType(type) {
+  if (!type) return ''
+  return TYPE_MAP[type.toLowerCase()] || type
+}
+
 function SearchIcon() {
   return (
     <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,7 +66,6 @@ function Pagination({ page, totalPages, onPageChange }) {
       >
         Previous
       </button>
-
       <div className="flex gap-1">
         {getPages().map((p, i) =>
           p === '...' ? (
@@ -61,9 +75,7 @@ function Pagination({ page, totalPages, onPageChange }) {
               key={p}
               onClick={() => onPageChange(p)}
               className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                page === p
-                  ? 'text-white'
-                  : 'border border-slate-300 text-slate-700 hover:bg-slate-50'
+                page === p ? 'text-white' : 'border border-slate-300 text-slate-700 hover:bg-slate-50'
               }`}
               style={page === p ? { backgroundColor: '#005F2C' } : {}}
             >
@@ -72,7 +84,6 @@ function Pagination({ page, totalPages, onPageChange }) {
           )
         )}
       </div>
-
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPages}
@@ -105,11 +116,10 @@ export default function ModelLibrary() {
   const stats = useMemo(() => ({
     total: models.length,
     brands: new Set(models.map(m => m.brand).filter(Boolean)).size,
-    documented: models.filter(m => m.fakeIndicators?.length > 0).length,
   }), [models])
 
   const productTypes = useMemo(() => {
-    const types = [...new Set(models.map(m => m.productType).filter(Boolean))].sort()
+    const types = [...new Set(models.map(m => normalizeType(m.productType)).filter(Boolean))].sort()
     return ['All', ...types]
   }, [models])
 
@@ -134,7 +144,7 @@ export default function ModelLibrary() {
         m.productType?.toLowerCase().includes(q)
       )
     }
-    if (typeFilter !== 'All') result = result.filter(m => m.productType === typeFilter)
+    if (typeFilter !== 'All') result = result.filter(m => normalizeType(m.productType) === typeFilter)
     if (brandFilter) result = result.filter(m => m.brand === brandFilter)
     if (yearFilter) result = result.filter(m => String(m.year) === yearFilter)
     if (handFilter) result = result.filter(m => m.hand === handFilter)
@@ -174,7 +184,6 @@ export default function ModelLibrary() {
   return (
     <div className="min-h-screen bg-slate-50">
 
-      {/* Hero */}
       <section className="bg-slate-900 text-white py-14 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: '#4ade80' }}>
@@ -200,38 +209,28 @@ export default function ModelLibrary() {
         </div>
       </section>
 
-      {/* Stats bar */}
       <div className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center gap-x-8 gap-y-1">
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold text-slate-900">{stats.total.toLocaleString()}</span>
+            <span className="text-xl font-bold" style={{ color: '#005F2C' }}>{stats.total.toLocaleString()}</span>
             <span className="text-sm text-slate-500">models</span>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold text-slate-900">{stats.brands}</span>
+            <span className="text-xl font-bold" style={{ color: '#005F2C' }}>{stats.brands}</span>
             <span className="text-sm text-slate-500">brands</span>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold" style={{ color: '#005F2C' }}>{stats.documented}</span>
-            <span className="text-sm text-slate-500">with documented indicators</span>
           </div>
         </div>
       </div>
 
-      {/* Sticky filters */}
       <div className="sticky top-0 z-10 bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 space-y-2.5">
-
-          {/* Product type pills */}
           <div className="flex gap-2 overflow-x-auto scrollbar-none">
             {productTypes.map(type => (
               <button
                 key={type}
                 onClick={() => setTypeFilter(type)}
                 className={`flex-none px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
-                  typeFilter === type
-                    ? 'text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  typeFilter === type ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
                 style={typeFilter === type ? { backgroundColor: '#005F2C' } : {}}
               >
@@ -239,8 +238,6 @@ export default function ModelLibrary() {
               </button>
             ))}
           </div>
-
-          {/* Secondary filters row */}
           <div className="flex flex-wrap items-center gap-2">
             <select
               value={brandFilter}
@@ -250,7 +247,6 @@ export default function ModelLibrary() {
               <option value="">All Brands</option>
               {brands.map(b => <option key={b} value={b}>{b}</option>)}
             </select>
-
             <select
               value={yearFilter}
               onChange={e => setYearFilter(e.target.value)}
@@ -259,7 +255,6 @@ export default function ModelLibrary() {
               <option value="">All Years</option>
               {years.map(y => <option key={y} value={String(y)}>{y}</option>)}
             </select>
-
             <select
               value={handFilter}
               onChange={e => setHandFilter(e.target.value)}
@@ -269,7 +264,6 @@ export default function ModelLibrary() {
               <option value="Right-Handed">Right-Handed</option>
               <option value="Left-Handed">Left-Handed</option>
             </select>
-
             {hasFilters && (
               <button
                 onClick={resetFilters}
@@ -281,7 +275,6 @@ export default function ModelLibrary() {
                 Clear
               </button>
             )}
-
             <span className="text-sm text-slate-500 ml-auto">
               {filtered.length.toLocaleString()} result{filtered.length !== 1 ? 's' : ''}
             </span>
@@ -289,7 +282,6 @@ export default function ModelLibrary() {
         </div>
       </div>
 
-      {/* Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         {filtered.length === 0 ? (
           <div className="text-center py-24">
@@ -320,7 +312,6 @@ export default function ModelLibrary() {
         )}
       </main>
 
-      {/* Footer */}
       <footer className="bg-slate-900 text-slate-500 text-sm py-8 px-4 mt-8">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -334,7 +325,6 @@ export default function ModelLibrary() {
         </div>
       </footer>
 
-      {/* Detail drawer */}
       {selectedModel && (
         <ModelDrawer model={selectedModel} onClose={() => setSelectedModel(null)} />
       )}
