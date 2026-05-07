@@ -1,0 +1,16 @@
+{
+  "name": "gc4c-fake-guide",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "process-data": "node scripts/process-csv.mjs"
+  },
+  "dependencies": {
+    "next": "14.2.3",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  }
+}
