@@ -23,7 +23,7 @@ function normalizeType(type) {
 
 function SearchIcon() {
   return (
-    <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
     </svg>
   )
@@ -164,12 +164,11 @@ export default function ModelLibrary() {
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-50">
-        <section className="bg-slate-900 py-14 px-4">
+        <section className="bg-white border-b border-slate-100 py-14 px-4">
           <div className="max-w-3xl mx-auto text-center space-y-4">
-            <div className="h-3 bg-slate-700 rounded w-32 mx-auto animate-pulse" />
-            <div className="h-10 bg-slate-700 rounded w-56 mx-auto animate-pulse" />
-            <div className="h-5 bg-slate-700 rounded w-72 mx-auto animate-pulse" />
-            <div className="h-14 bg-slate-700 rounded-xl max-w-2xl mx-auto animate-pulse mt-6" />
+            <div className="h-10 bg-slate-200 rounded w-72 mx-auto animate-pulse" />
+            <div className="h-5 bg-slate-100 rounded w-80 mx-auto animate-pulse" />
+            <div className="h-14 bg-slate-100 rounded-xl max-w-2xl mx-auto animate-pulse mt-6" />
           </div>
         </section>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
@@ -184,17 +183,15 @@ export default function ModelLibrary() {
   return (
     <div className="min-h-screen bg-slate-50">
 
-      <section className="bg-slate-900 text-white py-14 px-4">
+      {/* Hero */}
+      <section className="bg-white border-b border-slate-100 py-14 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: '#4ade80' }}>
-            GolfClubs4Cash
-          </p>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-3 tracking-tight">
-            Spot the Fake
+          <h1 className="text-4xl sm:text-5xl font-bold mb-3 tracking-tight" style={{ color: '#005F2C' }}>
+            How to Spot Fake Clubs
           </h1>
-          <p className="text-slate-400 text-base sm:text-lg mb-8 max-w-xl mx-auto">
+          <p className="text-slate-500 text-base sm:text-lg mb-8 max-w-xl mx-auto">
             Reference library for identifying counterfeit golf equipment.{' '}
-            <span className="text-slate-300">{stats.total.toLocaleString()} models across {stats.brands} brands.</span>
+            <span className="text-slate-700 font-medium">{stats.total.toLocaleString()} models across {stats.brands} brands.</span>
           </p>
           <div className="relative max-w-2xl mx-auto">
             <SearchIcon />
@@ -203,12 +200,13 @@ export default function ModelLibrary() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search by model name, brand, or product type…"
-              className="w-full py-4 pl-12 pr-6 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-green-400 focus:bg-white/15 text-base transition-colors"
+              className="w-full py-4 pl-12 pr-6 bg-slate-50 border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#005F2C] focus:border-[#005F2C] text-base transition-colors"
             />
           </div>
         </div>
       </section>
 
+      {/* Stats bar */}
       <div className="bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center gap-x-8 gap-y-1">
           <div className="flex items-baseline gap-2">
@@ -222,6 +220,7 @@ export default function ModelLibrary() {
         </div>
       </div>
 
+      {/* Sticky filters */}
       <div className="sticky top-0 z-10 bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 space-y-2.5">
           <div className="flex gap-2 overflow-x-auto scrollbar-none">
@@ -282,6 +281,7 @@ export default function ModelLibrary() {
         </div>
       </div>
 
+      {/* Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         {filtered.length === 0 ? (
           <div className="text-center py-24">
@@ -312,6 +312,7 @@ export default function ModelLibrary() {
         )}
       </main>
 
+      {/* Footer */}
       <footer className="bg-slate-900 text-slate-500 text-sm py-8 px-4 mt-8">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
