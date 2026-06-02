@@ -6,6 +6,7 @@ export default function Header() {
           src="https://cdn.shopify.com/s/files/1/0559/0450/1875/files/GC4C_SVG_Logo.svg?v=1745920148"
           alt="GolfClubs4Cash"
           className="h-9"
+          style={{ filter: 'brightness(0) invert(1)' }}
         />
       </div>
     </header>
