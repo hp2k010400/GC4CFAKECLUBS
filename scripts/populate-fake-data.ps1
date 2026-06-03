@@ -34,14 +34,14 @@ $brandData = @{
   "Taylormade" = @{
     "driver" = @{
       fakeIndicators = @(
-        "Carbon face models (Stealth, Qi10, Qi35): tap the face with a fingernail — genuine carbon produces a dull soft thud; a metallic ring means it is fake steel painted to look like carbon",
-        "Serial on hosel must follow TM + 2-digit year + D/W/H + 7 digits (e.g. TM24D1234567), laser-etched — fakes have wrong format, too few characters, or shallowly scratched serials",
+        "Serial on hosel must follow TM + 2-digit year + D/W/H + 7 digits (e.g. TM22D1234567), laser-etched — fakes have wrong format, too few characters, or shallowly scratched serials",
+        "The TaylorMade wordmark on the sole uses a proprietary typeface — fakes have subtly different letter spacing or stroke weight, most visible when compared directly",
         "Crown graphics must be perfectly centred with zero print bleed — fakes have off-centre logos or paint bleeding outside the lines",
         "Clubhead weight within 2g of the published specification — counterfeits vary 5-10g due to cheaper casting metal",
         "Stock shaft (Fujikura, Mitsubishi, Project X) carries the shaft manufacturer's own serial code near the tip — fakes use plain, unbranded graphite blanks"
       )
-      authenticityNotes = "Genuine TaylorMade drivers are among the most counterfeited clubs in the world. The carbon face on Stealth/Qi series is a key identifier — it feels slightly warmer to the touch than metal. TaylorMade offer authenticity checks via taylormadegolf.com. Contact support with the serial number to verify."
-      serialNumberFormat = "TM + 2-digit year + model letter (D=driver, W=wood, H=hybrid) + 7 digits. Example: TM24D1234567. Laser-etched on the hosel."
+      authenticityNotes = "TaylorMade drivers are among the most counterfeited clubs in the world. TaylorMade offer authenticity checks via taylormadegolf.com — contact support with the serial number to verify. On modern carbon face models (Stealth, Qi series), tapping the face with a fingernail should produce a dull soft thud, not a metallic ring."
+      serialNumberFormat = "TM + 2-digit year + model letter (D=driver, W=wood, H=hybrid) + 7 digits. Example: TM22D1234567. Laser-etched on the hosel."
     }
     "iron" = @{
       fakeIndicators = @(
