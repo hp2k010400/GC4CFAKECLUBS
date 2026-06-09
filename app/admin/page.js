@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useRef } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 
 const NETLIFY_FN = '/.netlify/functions/admin'
 const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/defmm2vll/image/upload'
@@ -87,17 +87,25 @@ function PhotoUploadBox({ label, labelColor, url, uploading, onFile }) {
 }
 
 export default function AdminPage() {
-  const [step, setStep] = useState('login')
-  const [password, setPassword] = useState('')
-  const [pwError, setPwError] = useState('')
-  const [logging, setLogging] = useState(false)
-
   const [models, setModels] = useState([])
   const [fakeData, setFakeData] = useState({})
   const [imageData, setImageData] = useState({})
   const [pending, setPending] = useState({})
   const [pendingImages, setPendingImages] = useState({})
-  const [dataLoading, setDataLoading] = useState(false)
+  const [dataLoading, setDataLoading] = useState(true)
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/data/models.json').then(r => r.json()),
+      fetch('/data/fake-data.json').then(r => r.json()).catch(() => ({})),
+      fetch('/data/fake-images.json').then(r => r.json()).catch(() => ({})),
+    ]).then(([mods, fd, fi]) => {
+      setModels(mods)
+      setFakeData(fd)
+      setImageData(fi)
+      setDataLoading(false)
+    }).catch(() => setDataLoading(false))
+  }, [])
 
   const [tab, setTab] = useState('edit')
   const [search, setSearch] = useState('')
@@ -118,38 +126,6 @@ export default function AdminPage() {
   const [publishMsg, setPublishMsg] = useState('')
 
   const fileRef = useRef()
-
-  const handleLogin = async (e) => {
-    e.preventDefault()
-    setLogging(true)
-    setPwError('')
-    try {
-      const res = await fetch(NETLIFY_FN, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'verify', password }),
-      })
-      if (res.ok) {
-        setDataLoading(true)
-        setStep('main')
-        const [mods, fd, fi] = await Promise.all([
-          fetch('/data/models.json').then(r => r.json()),
-          fetch('/data/fake-data.json').then(r => r.json()).catch(() => ({})),
-          fetch('/data/fake-images.json').then(r => r.json()).catch(() => ({})),
-        ])
-        setModels(mods)
-        setFakeData(fd)
-        setImageData(fi)
-        setDataLoading(false)
-      } else {
-        setPwError('Incorrect password')
-      }
-    } catch {
-      setPwError('Could not connect — make sure you are on the live site, not localhost')
-    } finally {
-      setLogging(false)
-    }
-  }
 
   const filtered = useMemo(() => {
     if (!search.trim()) return models.slice(0, 50)
@@ -283,7 +259,7 @@ export default function AdminPage() {
         const res = await fetch(NETLIFY_FN, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'commit', password, content: merged }),
+          body: JSON.stringify({ action: 'commit', content: merged }),
         })
         const data = await res.json()
         if (!res.ok || !data.success) throw new Error(data.error || 'Failed to save indicators')
@@ -295,7 +271,7 @@ export default function AdminPage() {
         const res = await fetch(NETLIFY_FN, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'commit-images', password, content: mergedImages }),
+          body: JSON.stringify({ action: 'commit-images', content: mergedImages }),
         })
         const data = await res.json()
         if (!res.ok || !data.success) throw new Error(data.error || 'Failed to save photos')
@@ -320,45 +296,6 @@ export default function AdminPage() {
     a.download = 'fake-indicators-template.csv'
     a.click()
     URL.revokeObjectURL(url)
-  }
-
-  if (step === 'login') {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-sm">
-          <div className="text-center mb-6">
-            <img
-              src="https://cdn.shopify.com/s/files/1/0559/0450/1875/files/GC4C_SVG_Logo.svg?v=1745920148"
-              alt="GolfClubs4Cash"
-              className="h-10 mx-auto mb-4"
-            />
-            <h1 className="text-xl font-bold text-slate-900">Admin Panel</h1>
-            <p className="text-sm text-slate-500 mt-1">Fake Reference Guide</p>
-          </div>
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
-              <input
-                type="password"
-                value={password}
-                onChange={e => { setPassword(e.target.value); setPwError('') }}
-                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
-                autoFocus
-              />
-              {pwError && <p className="text-red-500 text-xs mt-1">{pwError}</p>}
-            </div>
-            <button
-              type="submit"
-              disabled={logging}
-              className="w-full py-2.5 rounded-lg text-white text-sm font-semibold transition-opacity hover:opacity-90 disabled:opacity-60"
-              style={{ backgroundColor: '#005F2C' }}
-            >
-              {logging ? 'Checking…' : 'Sign in'}
-            </button>
-          </form>
-        </div>
-      </div>
-    )
   }
 
   if (dataLoading) {

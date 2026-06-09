@@ -20,15 +20,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid JSON' }) }
   }
 
-  const { action, password, content } = body
-
-  if (!process.env.ADMIN_PASSWORD || password !== process.env.ADMIN_PASSWORD) {
-    return { statusCode: 401, headers, body: JSON.stringify({ error: 'Incorrect password' }) }
-  }
-
-  if (action === 'verify') {
-    return { statusCode: 200, headers, body: JSON.stringify({ valid: true }) }
-  }
+  const { action, content } = body
 
   if (action === 'commit' || action === 'commit-images') {
     const pat = process.env.GITHUB_PAT
