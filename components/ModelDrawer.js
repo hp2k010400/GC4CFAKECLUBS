@@ -106,6 +106,49 @@ export default function ModelDrawer({ model, onClose }) {
             )}
           </section>
 
+          {/* Comparison Photos */}
+          {model.fakeImages && model.fakeImages.length > 0 && (
+            <section>
+              <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-4">
+                Comparison Photos
+              </h3>
+              <div className="space-y-6">
+                {model.fakeImages.map((comp, i) => (
+                  <div key={i}>
+                    <p className="text-xs font-semibold text-slate-500 mb-2">
+                      <span className="text-slate-300 mr-1.5">#{i + 1}</span>
+                      {comp.caption}
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
+                      {comp.realUrl && (
+                        <div>
+                          <img
+                            src={comp.realUrl}
+                            alt={`Real — ${comp.caption}`}
+                            className="w-full rounded-lg object-cover aspect-square bg-slate-100"
+                            onError={e => { e.currentTarget.style.display = 'none' }}
+                          />
+                          <p className="text-[10px] font-semibold text-center mt-1.5" style={{ color: '#005F2C' }}>Real</p>
+                        </div>
+                      )}
+                      {comp.fakeUrl && (
+                        <div>
+                          <img
+                            src={comp.fakeUrl}
+                            alt={`Counterfeit — ${comp.caption}`}
+                            className="w-full rounded-lg object-cover aspect-square bg-slate-100"
+                            onError={e => { e.currentTarget.style.display = 'none' }}
+                          />
+                          <p className="text-[10px] font-semibold text-center mt-1.5 text-red-500">Counterfeit</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Authenticity Notes */}
           {model.authenticityNotes && (
             <section>

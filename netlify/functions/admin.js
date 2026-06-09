@@ -30,14 +30,14 @@ exports.handler = async (event) => {
     return { statusCode: 200, headers, body: JSON.stringify({ valid: true }) }
   }
 
-  if (action === 'commit') {
+  if (action === 'commit' || action === 'commit-images') {
     const pat = process.env.GITHUB_PAT
     if (!pat) {
       return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server misconfigured — GITHUB_PAT env var missing' }) }
     }
 
     const repo = 'hp2k010400/GC4CFAKECLUBS'
-    const filePath = 'public/data/fake-data.json'
+    const filePath = action === 'commit-images' ? 'public/data/fake-images.json' : 'public/data/fake-data.json'
     const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`
 
     try {

@@ -3,6 +3,18 @@
 import { useState, useMemo, useRef } from 'react'
 
 const NETLIFY_FN = '/.netlify/functions/admin'
+const CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/defmm2vll/image/upload'
+const CLOUDINARY_PRESET = 'gc4c-fake-guide'
+
+async function uploadToCloudinary(file) {
+  const fd = new FormData()
+  fd.append('file', file)
+  fd.append('upload_preset', CLOUDINARY_PRESET)
+  const res = await fetch(CLOUDINARY_URL, { method: 'POST', body: fd })
+  if (!res.ok) throw new Error('Upload failed')
+  const data = await res.json()
+  return data.secure_url
+}
 
 function parseCsv(text) {
   const lines = text.trim().split(/\r?\n/)
@@ -32,6 +44,48 @@ const CSV_TEMPLATE = `Model ID,Model Name,Fake Indicator 1,Fake Indicator 2,Fake
 12345,Callaway Paradym Driver,Incorrect hosel shape,Paint finish is grainy,Crown flex point misaligned,,,Check serial starts with CPD,
 `
 
+function PhotoUploadBox({ label, labelColor, url, uploading, onFile }) {
+  const inputRef = useRef()
+  return (
+    <div>
+      <p className="text-[10px] font-bold uppercase tracking-wider mb-1.5" style={{ color: labelColor }}>{label}</p>
+      {url ? (
+        <div className="relative group cursor-pointer" onClick={() => inputRef.current?.click()}>
+          <img src={url} alt={label} className="w-full aspect-square object-cover rounded-lg border border-slate-200" />
+          <div className="absolute inset-0 bg-black/50 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+            <span className="text-white text-xs font-semibold">Change photo</span>
+          </div>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          disabled={uploading}
+          className="w-full aspect-square rounded-lg border-2 border-dashed border-slate-300 flex flex-col items-center justify-center gap-1.5 hover:border-slate-400 hover:bg-slate-50 transition-colors disabled:opacity-50"
+        >
+          {uploading ? (
+            <span className="text-xs text-slate-400">Uploading…</span>
+          ) : (
+            <>
+              <svg className="w-7 h-7 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span className="text-xs text-slate-400 font-medium">Add photo</span>
+            </>
+          )}
+        </button>
+      )}
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={e => { const f = e.target.files[0]; if (f) { onFile(f); e.target.value = '' } }}
+      />
+    </div>
+  )
+}
+
 export default function AdminPage() {
   const [step, setStep] = useState('login')
   const [password, setPassword] = useState('')
@@ -40,7 +94,9 @@ export default function AdminPage() {
 
   const [models, setModels] = useState([])
   const [fakeData, setFakeData] = useState({})
+  const [imageData, setImageData] = useState({})
   const [pending, setPending] = useState({})
+  const [pendingImages, setPendingImages] = useState({})
   const [dataLoading, setDataLoading] = useState(false)
 
   const [tab, setTab] = useState('edit')
@@ -50,6 +106,7 @@ export default function AdminPage() {
     fakeIndicators: ['', '', '', '', ''],
     authenticityNotes: '',
     serialNumberFormat: '',
+    comparisons: [],
   })
 
   const [csvText, setCsvText] = useState('')
@@ -75,12 +132,14 @@ export default function AdminPage() {
       if (res.ok) {
         setDataLoading(true)
         setStep('main')
-        const [mods, fd] = await Promise.all([
+        const [mods, fd, fi] = await Promise.all([
           fetch('/data/models.json').then(r => r.json()),
           fetch('/data/fake-data.json').then(r => r.json()).catch(() => ({})),
+          fetch('/data/fake-images.json').then(r => r.json()).catch(() => ({})),
         ])
         setModels(mods)
         setFakeData(fd)
+        setImageData(fi)
         setDataLoading(false)
       } else {
         setPwError('Incorrect password')
@@ -103,15 +162,23 @@ export default function AdminPage() {
   }, [models, search])
 
   const pendingCount = Object.keys(pending).length
+  const pendingImageCount = Object.keys(pendingImages).length
 
   const selectModel = (model) => {
     setSelectedId(model.id)
     const existing = pending[model.id] || fakeData[model.id] || {}
     const inds = [...(existing.fakeIndicators || []), '', '', '', '', ''].slice(0, 5)
+    const existingComps = (pendingImages[String(model.id)] || imageData[String(model.id)] || []).map(c => ({
+      ...c,
+      _id: Math.random().toString(36).slice(2),
+      realUploading: false,
+      fakeUploading: false,
+    }))
     setEditForm({
       fakeIndicators: inds,
       authenticityNotes: existing.authenticityNotes || '',
       serialNumberFormat: existing.serialNumberFormat || '',
+      comparisons: existingComps,
     })
   }
 
@@ -126,7 +193,52 @@ export default function AdminPage() {
         serialNumberFormat: editForm.serialNumberFormat,
       },
     }))
+    const comps = editForm.comparisons
+      .filter(c => c.caption || c.realUrl || c.fakeUrl)
+      .map(({ _id, realUploading, fakeUploading, ...rest }) => rest)
+    setPendingImages(prev => ({ ...prev, [String(selectedId)]: comps }))
     setSelectedId(null)
+  }
+
+  // Comparison management
+  const addComparison = () => {
+    setEditForm(f => ({
+      ...f,
+      comparisons: [...f.comparisons, {
+        _id: Math.random().toString(36).slice(2),
+        caption: '',
+        realUrl: '',
+        fakeUrl: '',
+        realUploading: false,
+        fakeUploading: false,
+      }],
+    }))
+  }
+
+  const removeComparison = (_id) => {
+    setEditForm(f => ({ ...f, comparisons: f.comparisons.filter(c => c._id !== _id) }))
+  }
+
+  const updateComparison = (_id, field, value) => {
+    setEditForm(f => ({ ...f, comparisons: f.comparisons.map(c => c._id === _id ? { ...c, [field]: value } : c) }))
+  }
+
+  const handleImageUpload = async (_id, side, file) => {
+    const uploadingKey = side === 'real' ? 'realUploading' : 'fakeUploading'
+    const urlKey = side === 'real' ? 'realUrl' : 'fakeUrl'
+    updateComparison(_id, uploadingKey, true)
+    try {
+      const url = await uploadToCloudinary(file)
+      setEditForm(f => ({
+        ...f,
+        comparisons: f.comparisons.map(c =>
+          c._id === _id ? { ...c, [urlKey]: url, [uploadingKey]: false } : c
+        ),
+      }))
+    } catch {
+      updateComparison(_id, uploadingKey, false)
+      alert('Upload failed — please try again')
+    }
   }
 
   const handleCsvParse = (text) => {
@@ -165,23 +277,33 @@ export default function AdminPage() {
   const publish = async () => {
     setPublishing(true)
     setPublishStatus(null)
-    const merged = { ...fakeData, ...pending }
     try {
-      const res = await fetch(NETLIFY_FN, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'commit', password, content: merged }),
-      })
-      const data = await res.json()
-      if (res.ok && data.success) {
+      if (pendingCount > 0) {
+        const merged = { ...fakeData, ...pending }
+        const res = await fetch(NETLIFY_FN, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'commit', password, content: merged }),
+        })
+        const data = await res.json()
+        if (!res.ok || !data.success) throw new Error(data.error || 'Failed to save indicators')
         setFakeData(merged)
         setPending({})
-        setPublishStatus('success')
-        setPublishMsg('Published! Netlify will redeploy in ~60 seconds — refresh the main site to see changes.')
-      } else {
-        setPublishStatus('error')
-        setPublishMsg(data.error || 'Unknown error')
       }
+      if (pendingImageCount > 0) {
+        const mergedImages = { ...imageData, ...pendingImages }
+        const res = await fetch(NETLIFY_FN, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'commit-images', password, content: mergedImages }),
+        })
+        const data = await res.json()
+        if (!res.ok || !data.success) throw new Error(data.error || 'Failed to save photos')
+        setImageData(mergedImages)
+        setPendingImages({})
+      }
+      setPublishStatus('success')
+      setPublishMsg('Published! Netlify will redeploy in ~60 seconds — refresh the main site to see changes.')
     } catch (err) {
       setPublishStatus('error')
       setPublishMsg(err.message)
@@ -248,6 +370,7 @@ export default function AdminPage() {
   }
 
   const selectedModel = models.find(m => m.id === selectedId)
+  const totalPending = pendingCount + pendingImageCount
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -257,18 +380,19 @@ export default function AdminPage() {
             src="https://cdn.shopify.com/s/files/1/0559/0450/1875/files/GC4C_SVG_Logo.svg?v=1745920148"
             alt="GolfClubs4Cash"
             className="h-8"
+            style={{ filter: 'brightness(0) invert(1)' }}
           />
           <span className="text-white/60 text-sm font-medium">Admin Panel</span>
         </div>
         <div className="flex items-center gap-3">
-          {pendingCount > 0 && (
+          {totalPending > 0 && (
             <span className="text-xs bg-white/20 px-2.5 py-1 rounded-full">
-              {pendingCount} unsaved {pendingCount === 1 ? 'change' : 'changes'}
+              {totalPending} unsaved {totalPending === 1 ? 'change' : 'changes'}
             </span>
           )}
           <button
             onClick={publish}
-            disabled={pendingCount === 0 || publishing}
+            disabled={totalPending === 0 || publishing}
             className="px-4 py-2 rounded-lg text-sm font-semibold bg-white disabled:opacity-40 hover:opacity-90 transition-opacity"
             style={{ color: '#005F2C' }}
           >
@@ -305,6 +429,7 @@ export default function AdminPage() {
 
         {tab === 'edit' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Model list */}
             <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
               <div className="p-4 border-b border-slate-100">
                 <input
@@ -317,8 +442,9 @@ export default function AdminPage() {
               </div>
               <div className="overflow-y-auto" style={{ maxHeight: '600px' }}>
                 {filtered.map(m => {
-                  const hasPending = !!pending[m.id]
-                  const hasFake = hasPending || !!fakeData[m.id]
+                  const hasPending = !!pending[m.id] || !!pendingImages[String(m.id)]
+                  const hasFake = !!fakeData[m.id]
+                  const hasImages = !!(imageData[String(m.id)]?.length)
                   const indicatorCount = (pending[m.id] || fakeData[m.id])?.fakeIndicators?.length || 0
                   return (
                     <button
@@ -337,6 +463,11 @@ export default function AdminPage() {
                               {indicatorCount}
                             </span>
                           )}
+                          {hasImages && (
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-blue-50 text-blue-600">
+                              📷
+                            </span>
+                          )}
                           {hasPending && (
                             <span className="text-xs bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">unsaved</span>
                           )}
@@ -351,10 +482,11 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-slate-200">
+            {/* Edit panel */}
+            <div className="bg-white rounded-xl border border-slate-200 overflow-y-auto" style={{ maxHeight: '80vh' }}>
               {!selectedModel ? (
                 <div className="flex items-center justify-center h-64 text-slate-400 text-sm text-center px-6">
-                  Search for a model on the left and click it to edit its fake indicators
+                  Search for a model on the left and click it to edit its fake indicators and photos
                 </div>
               ) : (
                 <div className="p-6">
@@ -362,7 +494,9 @@ export default function AdminPage() {
                     <h2 className="text-lg font-bold text-slate-900">{selectedModel.name || selectedModel.model}</h2>
                     <p className="text-sm text-slate-500">{selectedModel.brand} · {selectedModel.productType} · {selectedModel.year}</p>
                   </div>
+
                   <div className="space-y-4">
+                    {/* Fake Indicators */}
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-2">Fake Indicators</label>
                       <div className="space-y-2">
@@ -384,6 +518,8 @@ export default function AdminPage() {
                         ))}
                       </div>
                     </div>
+
+                    {/* Authenticity Notes */}
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-1">Authenticity Notes</label>
                       <textarea
@@ -394,6 +530,8 @@ export default function AdminPage() {
                         className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C] resize-none"
                       />
                     </div>
+
+                    {/* Serial Number Format */}
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-1">Serial Number Format</label>
                       <input
@@ -404,6 +542,73 @@ export default function AdminPage() {
                         className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
                       />
                     </div>
+
+                    {/* Comparison Photos */}
+                    <div className="border-t border-slate-100 pt-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <label className="text-sm font-semibold text-slate-700">Comparison Photos</label>
+                        <button
+                          type="button"
+                          onClick={addComparison}
+                          className="text-xs font-semibold px-3 py-1 rounded-lg border border-[#005F2C] hover:bg-green-50 transition-colors"
+                          style={{ color: '#005F2C' }}
+                        >
+                          + Add comparison
+                        </button>
+                      </div>
+
+                      {editForm.comparisons.length === 0 ? (
+                        <div className="text-center py-5 bg-slate-50 rounded-xl border border-slate-200 border-dashed">
+                          <svg className="w-8 h-8 text-slate-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <p className="text-xs text-slate-400 font-medium">No comparison photos yet</p>
+                          <p className="text-xs text-slate-400 mt-0.5">Click "+ Add comparison" to upload Real vs Counterfeit photos</p>
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          {editForm.comparisons.map((comp, i) => (
+                            <div key={comp._id} className="border border-slate-200 rounded-xl p-4">
+                              <div className="flex items-center justify-between mb-3">
+                                <span className="text-xs font-bold text-slate-500">#{i + 1}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => removeComparison(comp._id)}
+                                  className="text-xs text-red-400 hover:text-red-600 font-medium"
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                              <input
+                                type="text"
+                                value={comp.caption}
+                                onChange={e => updateComparison(comp._id, 'caption', e.target.value)}
+                                placeholder="What's different? e.g. The sole screw shape is different"
+                                className="w-full border border-slate-300 rounded-lg px-3 py-1.5 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
+                              />
+                              <div className="grid grid-cols-2 gap-3">
+                                <PhotoUploadBox
+                                  label="Real"
+                                  labelColor="#005F2C"
+                                  url={comp.realUrl}
+                                  uploading={comp.realUploading}
+                                  onFile={file => handleImageUpload(comp._id, 'real', file)}
+                                />
+                                <PhotoUploadBox
+                                  label="Counterfeit"
+                                  labelColor="#dc2626"
+                                  url={comp.fakeUrl}
+                                  uploading={comp.fakeUploading}
+                                  onFile={file => handleImageUpload(comp._id, 'fake', file)}
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Save / Cancel */}
                     <div className="flex gap-3 pt-2">
                       <button
                         onClick={saveEdit}
@@ -434,7 +639,7 @@ export default function AdminPage() {
             <div className="bg-white rounded-xl border border-slate-200 p-6">
               <h2 className="text-base font-semibold text-slate-900 mb-1">Bulk CSV Import</h2>
               <p className="text-sm text-slate-500 mb-4">
-                Download the template, fill it in with Neil's data (Model ID is required — copy from the library URL or card), then upload or paste below.
+                Download the template, fill it in (Model ID is required — copy from the library URL or card), then upload or paste below.
               </p>
               <button
                 onClick={downloadTemplate}
