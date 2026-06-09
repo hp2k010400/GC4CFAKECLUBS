@@ -114,16 +114,16 @@ export default function ModelLibrary() {
     Promise.all([
       fetch('/data/models.json').then(r => r.json()),
       fetch('/data/fake-data.json').then(r => r.json()).catch(() => ({})),
+      fetch('/data/fake-data-overrides.json').then(r => r.json()).catch(() => ({})),
       fetch('/data/fake-images.json').then(r => r.json()).catch(() => ({})),
-    ]).then(([data, fakeData, fakeImages]) => {
+    ]).then(([data, fakeData, overrides, fakeImages]) => {
       const merged = data.map(m => {
-        const fd = fakeData[m.id]
+        const fd = overrides[m.id] || fakeData[m.id]
         const fi = fakeImages[String(m.id)] || []
         return {
           ...m,
           fakeIndicators: fd?.fakeIndicators || [],
           authenticityNotes: fd?.authenticityNotes || '',
-          serialNumberFormat: fd?.serialNumberFormat || '',
           fakeImages: fi,
         }
       })

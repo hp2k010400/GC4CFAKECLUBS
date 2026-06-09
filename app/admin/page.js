@@ -88,7 +88,8 @@ function PhotoUploadBox({ label, labelColor, url, uploading, onFile }) {
 
 export default function AdminPage() {
   const [models, setModels] = useState([])
-  const [fakeData, setFakeData] = useState({})
+  const [baseData, setBaseData] = useState({})
+  const [overrideData, setOverrideData] = useState({})
   const [imageData, setImageData] = useState({})
   const [pending, setPending] = useState({})
   const [pendingImages, setPendingImages] = useState({})
@@ -98,10 +99,12 @@ export default function AdminPage() {
     Promise.all([
       fetch('/data/models.json').then(r => r.json()),
       fetch('/data/fake-data.json').then(r => r.json()).catch(() => ({})),
+      fetch('/data/fake-data-overrides.json').then(r => r.json()).catch(() => ({})),
       fetch('/data/fake-images.json').then(r => r.json()).catch(() => ({})),
-    ]).then(([mods, fd, fi]) => {
+    ]).then(([mods, base, overrides, fi]) => {
       setModels(mods)
-      setFakeData(fd)
+      setBaseData(base)
+      setOverrideData(overrides)
       setImageData(fi)
       setDataLoading(false)
     }).catch(() => setDataLoading(false))
@@ -141,7 +144,7 @@ export default function AdminPage() {
 
   const selectModel = (model) => {
     setSelectedId(model.id)
-    const existing = pending[model.id] || fakeData[model.id] || {}
+    const existing = pending[model.id] || overrideData[model.id] || baseData[model.id] || {}
     const inds = [...(existing.fakeIndicators || []), '', '', '', '', ''].slice(0, 5)
     const existingComps = (pendingImages[String(model.id)] || imageData[String(model.id)] || []).map(c => ({
       ...c,
@@ -259,7 +262,7 @@ export default function AdminPage() {
         })
         const data = await res.json()
         if (!res.ok || !data.success) throw new Error(data.error || 'Failed to save indicators')
-        setFakeData(prev => ({ ...prev, ...pending }))
+        setOverrideData(prev => ({ ...prev, ...pending }))
         setPending({})
       }
       if (pendingImageCount > 0) {

@@ -93,7 +93,7 @@ exports.handler = async (event) => {
 
     const filePath = action === 'commit-images'
       ? 'public/data/fake-images.json'
-      : 'public/data/fake-data.json'
+      : 'public/data/fake-data-overrides.json'
 
     try {
       await mergeAndCommit(pat, filePath, updates)
