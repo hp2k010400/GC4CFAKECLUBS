@@ -25,6 +25,42 @@ function request(url, options = {}, body = null) {
   })
 }
 
+async function mergeAndCommit(pat, filePath, updates) {
+  const repo = 'hp2k010400/GC4CFAKECLUBS'
+  const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`
+  const ghHeaders = {
+    Authorization: `Bearer ${pat}`,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'User-Agent': 'gc4c-fake-guide',
+  }
+
+  // Read current file from GitHub to get SHA and existing content
+  const getRes = await request(apiUrl, { headers: ghHeaders })
+  if (!getRes.ok) throw new Error(`Failed to read file: ${getRes.status}`)
+
+  const fileData = getRes.json()
+  const sha = fileData.sha
+  const current = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'))
+
+  // Merge just the changed entries
+  const merged = { ...current, ...updates }
+  const encoded = Buffer.from(JSON.stringify(merged, null, 2)).toString('base64')
+
+  const putBody = JSON.stringify({
+    message: 'Update via admin panel',
+    content: encoded,
+    sha,
+  })
+
+  const putRes = await request(apiUrl, {
+    method: 'PUT',
+    headers: { ...ghHeaders, 'Content-Type': 'application/json' },
+  }, putBody)
+
+  if (!putRes.ok) throw new Error(`GitHub write error: ${putRes.text()}`)
+}
+
 exports.handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -47,7 +83,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid JSON' }) }
   }
 
-  const { action, content } = body
+  const { action, updates } = body
 
   if (action === 'commit' || action === 'commit-images') {
     const pat = process.env.GITHUB_PAT
@@ -55,39 +91,12 @@ exports.handler = async (event) => {
       return { statusCode: 500, headers, body: JSON.stringify({ error: 'GITHUB_PAT env var missing' }) }
     }
 
-    const repo = 'hp2k010400/GC4CFAKECLUBS'
-    const filePath = action === 'commit-images' ? 'public/data/fake-images.json' : 'public/data/fake-data.json'
-    const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`
-    const ghHeaders = {
-      Authorization: `Bearer ${pat}`,
-      Accept: 'application/vnd.github+json',
-      'X-GitHub-Api-Version': '2022-11-28',
-      'User-Agent': 'gc4c-fake-guide',
-    }
+    const filePath = action === 'commit-images'
+      ? 'public/data/fake-images.json'
+      : 'public/data/fake-data.json'
 
     try {
-      const getRes = await request(apiUrl, { headers: ghHeaders })
-      let sha = null
-      if (getRes.ok) {
-        sha = getRes.json().sha
-      }
-
-      const encoded = Buffer.from(JSON.stringify(content, null, 2)).toString('base64')
-      const putBody = JSON.stringify({
-        message: 'Update via admin panel',
-        content: encoded,
-        ...(sha ? { sha } : {}),
-      })
-
-      const putRes = await request(apiUrl, {
-        method: 'PUT',
-        headers: { ...ghHeaders, 'Content-Type': 'application/json' },
-      }, putBody)
-
-      if (!putRes.ok) {
-        return { statusCode: 500, headers, body: JSON.stringify({ error: `GitHub error: ${putRes.text()}` }) }
-      }
-
+      await mergeAndCommit(pat, filePath, updates)
       return { statusCode: 200, headers, body: JSON.stringify({ success: true }) }
     } catch (err) {
       return { statusCode: 500, headers, body: JSON.stringify({ error: err.message }) }

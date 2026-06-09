@@ -252,27 +252,25 @@ export default function AdminPage() {
     setPublishStatus(null)
     try {
       if (pendingCount > 0) {
-        const merged = { ...fakeData, ...pending }
         const res = await fetch(NETLIFY_FN, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'commit', content: merged }),
+          body: JSON.stringify({ action: 'commit', updates: pending }),
         })
         const data = await res.json()
         if (!res.ok || !data.success) throw new Error(data.error || 'Failed to save indicators')
-        setFakeData(merged)
+        setFakeData(prev => ({ ...prev, ...pending }))
         setPending({})
       }
       if (pendingImageCount > 0) {
-        const mergedImages = { ...imageData, ...pendingImages }
         const res = await fetch(NETLIFY_FN, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'commit-images', content: mergedImages }),
+          body: JSON.stringify({ action: 'commit-images', updates: pendingImages }),
         })
         const data = await res.json()
         if (!res.ok || !data.success) throw new Error(data.error || 'Failed to save photos')
-        setImageData(mergedImages)
+        setImageData(prev => ({ ...prev, ...pendingImages }))
         setPendingImages({})
       }
       setPublishStatus('success')
