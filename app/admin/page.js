@@ -113,7 +113,6 @@ export default function AdminPage() {
   const [editForm, setEditForm] = useState({
     fakeIndicators: ['', '', '', '', ''],
     authenticityNotes: '',
-    serialNumberFormat: '',
     comparisons: [],
   })
 
@@ -153,7 +152,6 @@ export default function AdminPage() {
     setEditForm({
       fakeIndicators: inds,
       authenticityNotes: existing.authenticityNotes || '',
-      serialNumberFormat: existing.serialNumberFormat || '',
       comparisons: existingComps,
     })
   }
@@ -166,7 +164,6 @@ export default function AdminPage() {
       [selectedId]: {
         fakeIndicators: indicators,
         authenticityNotes: editForm.authenticityNotes,
-        serialNumberFormat: editForm.serialNumberFormat,
       },
     }))
     const comps = editForm.comparisons
@@ -465,18 +462,6 @@ export default function AdminPage() {
                         rows={3}
                         placeholder="Additional notes about how to spot a fake…"
                         className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C] resize-none"
-                      />
-                    </div>
-
-                    {/* Serial Number Format */}
-                    <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-1">Serial Number Format</label>
-                      <input
-                        type="text"
-                        value={editForm.serialNumberFormat}
-                        onChange={e => setEditForm(f => ({ ...f, serialNumberFormat: e.target.value }))}
-                        placeholder="e.g. Starts with CPD followed by 8 digits"
-                        className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
                       />
                     </div>
 
