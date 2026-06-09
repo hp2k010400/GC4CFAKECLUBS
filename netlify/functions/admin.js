@@ -1,3 +1,30 @@
+const https = require('https')
+
+function request(url, options = {}, body = null) {
+  return new Promise((resolve, reject) => {
+    const parsed = new URL(url)
+    const opts = {
+      hostname: parsed.hostname,
+      path: parsed.pathname + parsed.search,
+      method: options.method || 'GET',
+      headers: options.headers || {},
+    }
+    const req = https.request(opts, res => {
+      let data = ''
+      res.on('data', chunk => { data += chunk })
+      res.on('end', () => resolve({
+        ok: res.statusCode >= 200 && res.statusCode < 300,
+        status: res.statusCode,
+        text: () => data,
+        json: () => JSON.parse(data),
+      }))
+    })
+    req.on('error', reject)
+    if (body) req.write(body)
+    req.end()
+  })
+}
+
 exports.handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -25,48 +52,40 @@ exports.handler = async (event) => {
   if (action === 'commit' || action === 'commit-images') {
     const pat = process.env.GITHUB_PAT
     if (!pat) {
-      return { statusCode: 500, headers, body: JSON.stringify({ error: 'Server misconfigured — GITHUB_PAT env var missing' }) }
+      return { statusCode: 500, headers, body: JSON.stringify({ error: 'GITHUB_PAT env var missing' }) }
     }
 
     const repo = 'hp2k010400/GC4CFAKECLUBS'
     const filePath = action === 'commit-images' ? 'public/data/fake-images.json' : 'public/data/fake-data.json'
     const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`
+    const ghHeaders = {
+      Authorization: `Bearer ${pat}`,
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      'User-Agent': 'gc4c-fake-guide',
+    }
 
     try {
-      const getRes = await fetch(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${pat}`,
-          Accept: 'application/vnd.github+json',
-          'X-GitHub-Api-Version': '2022-11-28',
-        },
-      })
-
+      const getRes = await request(apiUrl, { headers: ghHeaders })
       let sha = null
       if (getRes.ok) {
-        const fileData = await getRes.json()
-        sha = fileData.sha
+        sha = getRes.json().sha
       }
 
       const encoded = Buffer.from(JSON.stringify(content, null, 2)).toString('base64')
-
-      const putRes = await fetch(apiUrl, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${pat}`,
-          Accept: 'application/vnd.github+json',
-          'X-GitHub-Api-Version': '2022-11-28',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: 'Update fake indicators via admin panel',
-          content: encoded,
-          ...(sha ? { sha } : {}),
-        }),
+      const putBody = JSON.stringify({
+        message: 'Update via admin panel',
+        content: encoded,
+        ...(sha ? { sha } : {}),
       })
 
+      const putRes = await request(apiUrl, {
+        method: 'PUT',
+        headers: { ...ghHeaders, 'Content-Type': 'application/json' },
+      }, putBody)
+
       if (!putRes.ok) {
-        const err = await putRes.text()
-        return { statusCode: 500, headers, body: JSON.stringify({ error: `GitHub API error: ${err}` }) }
+        return { statusCode: 500, headers, body: JSON.stringify({ error: `GitHub error: ${putRes.text()}` }) }
       }
 
       return { statusCode: 200, headers, body: JSON.stringify({ success: true }) }
