@@ -378,9 +378,9 @@ export default function AdminPage() {
               <div className="overflow-y-auto" style={{ maxHeight: '600px' }}>
                 {filtered.map(m => {
                   const hasPending = !!pending[m.id] || !!pendingImages[String(m.id)]
-                  const hasFake = !!fakeData[m.id]
+                  const hasFake = !!(overrideData[m.id] || baseData[m.id])
                   const hasImages = !!(imageData[String(m.id)]?.length)
-                  const indicatorCount = (pending[m.id] || fakeData[m.id])?.fakeIndicators?.length || 0
+                  const indicatorCount = (pending[m.id] || overrideData[m.id] || baseData[m.id])?.fakeIndicators?.length || 0
                   return (
                     <button
                       key={m.id}
