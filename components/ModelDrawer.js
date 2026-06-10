@@ -14,6 +14,7 @@ export default function ModelDrawer({ model, onClose }) {
   }, [onClose])
 
   const hasIndicators = model.fakeIndicators && model.fakeIndicators.length > 0
+  const hasPhotos = model.fakeImages && model.fakeImages.length > 0
 
   const details = [
     { label: 'Brand', value: model.brand },
@@ -29,150 +30,146 @@ export default function ModelDrawer({ model, onClose }) {
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/50 z-40 animate-fade-in backdrop-blur-sm"
+        className="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      {/* Drawer */}
-      <div className="fixed right-0 top-0 h-full w-full sm:w-[480px] bg-white z-50 shadow-2xl overflow-y-auto animate-slide-in">
+      {/* Full-screen modal */}
+      <div className="fixed inset-0 z-50 overflow-y-auto">
+        <div className="min-h-full flex items-start justify-center p-4 sm:p-6">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl my-4 overflow-hidden">
 
-        {/* Sticky header */}
-        <div className="sticky top-0 bg-white border-b border-slate-200 px-5 py-4 flex items-start justify-between gap-3 z-10">
-          <div className="min-w-0">
-            <p className="text-[10px] font-bold uppercase tracking-[0.14em] mb-0.5" style={{ color: '#005F2C' }}>
-              {model.brand}
-            </p>
-            <h2 className="font-bold text-slate-900 text-base leading-tight">{model.name}</h2>
-          </div>
-          <button
-            onClick={onClose}
-            className="flex-none w-8 h-8 flex items-center justify-center rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors mt-0.5"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Club image */}
-        <div className="bg-slate-50 border-b border-slate-100 flex items-center justify-center" style={{ minHeight: '240px', maxHeight: '300px' }}>
-          <img
-            src={model.imageUrl || '/placeholder.svg'}
-            alt={model.name}
-            className="w-full h-full object-contain p-6"
-            style={{ maxHeight: '300px' }}
-            onError={e => { e.currentTarget.src = '/placeholder.svg' }}
-          />
-        </div>
-
-        <div className="px-5 py-6 space-y-7">
-
-          {/* Details grid */}
-          {details.length > 0 && (
-            <section>
-              <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-3">Club Details</h3>
-              <div className="grid grid-cols-2 gap-2">
-                {details.map(({ label, value }) => (
-                  <div key={label} className="bg-slate-50 rounded-lg px-3 py-2.5">
-                    <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">{label}</p>
-                    <p className="text-sm font-semibold text-slate-800">{value}</p>
-                  </div>
-                ))}
+            {/* Header */}
+            <div className="sticky top-0 bg-white border-b border-slate-100 px-6 py-4 flex items-center justify-between z-10">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.14em]" style={{ color: '#005F2C' }}>
+                  {model.brand}
+                </p>
+                <h2 className="font-bold text-slate-900 text-lg leading-tight">{model.name}</h2>
               </div>
-            </section>
-          )}
-
-          {/* Fake Indicators */}
-          <section>
-            <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-3">
-              Fake Indicators
-            </h3>
-            {hasIndicators ? (
-              <ul className="space-y-1.5 list-disc list-outside pl-4">
-                {model.fakeIndicators.map((indicator, i) => (
-                  <li key={i} className="text-sm text-slate-700 leading-snug pl-1">
-                    {indicator}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <div className="bg-slate-50 rounded-xl px-5 py-6 text-center border border-slate-200 border-dashed">
-                <svg className="w-8 h-8 text-slate-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <button
+                onClick={onClose}
+                className="w-9 h-9 flex items-center justify-center rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                <p className="text-slate-500 text-sm font-medium">Not yet documented</p>
-                <p className="text-slate-400 text-xs mt-1">Staff can add indicators via the admin panel</p>
-              </div>
-            )}
-          </section>
+              </button>
+            </div>
 
-          {/* Comparison Photos */}
-          {model.fakeImages && model.fakeImages.length > 0 && (
-            <section>
-              <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-4">
-                Comparison Photos
-              </h3>
-              <div className="space-y-6">
-                {model.fakeImages.map((comp, i) => (
-                  <div key={i}>
-                    <p className="text-xs font-semibold text-slate-500 mb-2">
-                      <span className="text-slate-300 mr-1.5">#{i + 1}</span>
-                      {comp.caption}
-                    </p>
-                    <div className="grid grid-cols-2 gap-2">
-                      {comp.realUrl && (
-                        <div>
-                          <img
-                            src={comp.realUrl}
-                            alt={`Real — ${comp.caption}`}
-                            className="w-full rounded-lg object-cover aspect-square bg-slate-100"
-                            onError={e => { e.currentTarget.style.display = 'none' }}
-                          />
-                          <p className="text-[10px] font-semibold text-center mt-1.5" style={{ color: '#005F2C' }}>Real</p>
+            <div className="p-6 space-y-8">
+
+              {/* ── COMPARISON PHOTOS (hero) ── */}
+              {hasPhotos ? (
+                <section>
+                  <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-4">
+                    Comparison Photos
+                  </h3>
+                  <div className="space-y-6">
+                    {model.fakeImages.map((comp, i) => (
+                      <div key={i} className="bg-slate-50 rounded-2xl p-4">
+                        {comp.caption && (
+                          <p className="text-sm font-semibold text-slate-700 mb-4 text-center">
+                            <span className="text-slate-400 mr-2">#{i + 1}</span>
+                            {comp.caption}
+                          </p>
+                        )}
+                        <div className="grid grid-cols-2 gap-3">
+                          {comp.realUrl && (
+                            <div>
+                              <img
+                                src={comp.realUrl}
+                                alt={`Real — ${comp.caption}`}
+                                className="w-full rounded-xl object-cover aspect-square bg-white shadow-sm"
+                                onError={e => { e.currentTarget.style.display = 'none' }}
+                              />
+                              <p className="text-xs font-bold text-center mt-2 uppercase tracking-wider" style={{ color: '#005F2C' }}>
+                                ✓ Real
+                              </p>
+                            </div>
+                          )}
+                          {comp.fakeUrl && (
+                            <div>
+                              <img
+                                src={comp.fakeUrl}
+                                alt={`Counterfeit — ${comp.caption}`}
+                                className="w-full rounded-xl object-cover aspect-square bg-white shadow-sm"
+                                onError={e => { e.currentTarget.style.display = 'none' }}
+                              />
+                              <p className="text-xs font-bold text-center mt-2 uppercase tracking-wider text-red-500">
+                                ✗ Counterfeit
+                              </p>
+                            </div>
+                          )}
                         </div>
-                      )}
-                      {comp.fakeUrl && (
-                        <div>
-                          <img
-                            src={comp.fakeUrl}
-                            alt={`Counterfeit — ${comp.caption}`}
-                            className="w-full rounded-lg object-cover aspect-square bg-slate-100"
-                            onError={e => { e.currentTarget.style.display = 'none' }}
-                          />
-                          <p className="text-[10px] font-semibold text-center mt-1.5 text-red-500">Counterfeit</p>
-                        </div>
-                      )}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </section>
-          )}
+                </section>
+              ) : (
+                /* No photos — show club image as hero instead */
+                <div className="bg-slate-50 rounded-2xl flex items-center justify-center" style={{ minHeight: '220px' }}>
+                  <img
+                    src={model.imageUrl || '/placeholder.svg'}
+                    alt={model.name}
+                    className="object-contain p-6"
+                    style={{ maxHeight: '220px' }}
+                    onError={e => { e.currentTarget.src = '/placeholder.svg' }}
+                  />
+                </div>
+              )}
 
-          {/* Authenticity Notes */}
-          {model.authenticityNotes && (
-            <section>
-              <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-3">
-                Authenticity Notes
-              </h3>
-              <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-4">
-                <p className="text-sm text-amber-900 leading-relaxed">{model.authenticityNotes}</p>
-              </div>
-            </section>
-          )}
+              {/* ── FAKE INDICATORS ── */}
+              <section>
+                <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-3">
+                  Fake Indicators
+                </h3>
+                {hasIndicators ? (
+                  <ul className="space-y-2">
+                    {model.fakeIndicators.map((indicator, i) => (
+                      <li key={i} className="flex gap-3 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+                        <span className="text-red-400 font-bold text-sm flex-none">{i + 1}.</span>
+                        <span className="text-sm text-slate-700 leading-snug">{indicator}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="bg-slate-50 rounded-xl px-5 py-6 text-center border border-slate-200 border-dashed">
+                    <p className="text-slate-500 text-sm font-medium">Not yet documented</p>
+                    <p className="text-slate-400 text-xs mt-1">Staff can add indicators via the admin panel</p>
+                  </div>
+                )}
+              </section>
 
-          {/* Serial Number Format */}
-          {model.serialNumberFormat && (
-            <section>
-              <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-3">
-                Serial Number Format
-              </h3>
-              <div className="bg-slate-900 rounded-xl px-4 py-3">
-                <code className="text-sm text-green-400 font-mono">{model.serialNumberFormat}</code>
-              </div>
-            </section>
-          )}
+              {/* ── AUTHENTICITY NOTES ── */}
+              {model.authenticityNotes && (
+                <section>
+                  <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-3">
+                    Authenticity Notes
+                  </h3>
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-4">
+                    <p className="text-sm text-amber-900 leading-relaxed">{model.authenticityNotes}</p>
+                  </div>
+                </section>
+              )}
 
+              {/* ── CLUB DETAILS ── */}
+              {details.length > 0 && (
+                <section>
+                  <h3 className="text-[10px] font-bold text-slate-400 uppercase tracking-[0.16em] mb-3">Club Details</h3>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {details.map(({ label, value }) => (
+                      <div key={label} className="bg-slate-50 rounded-lg px-3 py-2.5">
+                        <p className="text-[10px] text-slate-400 uppercase tracking-wide mb-0.5">{label}</p>
+                        <p className="text-sm font-semibold text-slate-800">{value}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+            </div>
+          </div>
         </div>
       </div>
     </>
