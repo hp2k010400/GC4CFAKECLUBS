@@ -142,6 +142,15 @@ export default function AdminPage() {
   const pendingCount = Object.keys(pending).length
   const pendingImageCount = Object.keys(pendingImages).length
 
+  const newComparison = () => ({
+    _id: Math.random().toString(36).slice(2),
+    caption: '',
+    realUrl: '',
+    fakeUrl: '',
+    realUploading: false,
+    fakeUploading: false,
+  })
+
   const selectModel = (model) => {
     setSelectedId(model.id)
     const existing = pending[model.id] || overrideData[model.id] || baseData[model.id] || {}
@@ -152,10 +161,11 @@ export default function AdminPage() {
       realUploading: false,
       fakeUploading: false,
     }))
+    const compsWithEmpty = [...existingComps, newComparison()]
     setEditForm({
       fakeIndicators: inds,
       authenticityNotes: existing.authenticityNotes || '',
-      comparisons: existingComps,
+      comparisons: compsWithEmpty,
     })
   }
 
@@ -205,12 +215,18 @@ export default function AdminPage() {
     updateComparison(_id, uploadingKey, true)
     try {
       const url = await uploadToCloudinary(file)
-      setEditForm(f => ({
-        ...f,
-        comparisons: f.comparisons.map(c =>
+      setEditForm(f => {
+        const updated = f.comparisons.map(c =>
           c._id === _id ? { ...c, [urlKey]: url, [uploadingKey]: false } : c
-        ),
-      }))
+        )
+        const justUpdated = updated.find(c => c._id === _id)
+        const isLast = updated[updated.length - 1]._id === _id
+        const bothFilled = justUpdated.realUrl && justUpdated.fakeUrl
+        if (bothFilled && isLast) {
+          return { ...f, comparisons: [...updated, newComparison()] }
+        }
+        return { ...f, comparisons: updated }
+      })
     } catch {
       updateComparison(_id, uploadingKey, false)
       alert('Upload failed — please try again')
