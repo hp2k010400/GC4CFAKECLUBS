@@ -3,6 +3,16 @@
     "fakeIndicators": [],
     "authenticityNotes": ""
   },
+  "3176": {
+    "fakeIndicators": [
+      "Serial on hosel must follow TM + 2-digit year + D/W/H + 7 digits (e.g. TM22D1234567), laser-etched — fakes have wrong format, too few characters, or shallowly scratched serials",
+      "The TaylorMade wordmark on the sole uses a proprietary typeface — fakes have subtly different letter spacing or stroke weight, most visible when compared directly",
+      "Crown graphics must be perfectly centred with zero print bleed — fakes have off-centre logos or paint bleeding outside the lines",
+      "Clubhead weight within 2g of the published specification — counterfeits vary 5-10g due to cheaper casting metal",
+      "Stock shaft (Fujikura, Mitsubishi, Project X) carries the shaft manufacturer's own serial code near the tip — fakes use plain, unbranded graphite blanks"
+    ],
+    "authenticityNotes": "Tapping the face with a fingernail should produce a dull soft thud, not a metallic ring"
+  },
   "20336": {
     "fakeIndicators": [
       "The Carbonwood face should show a distinct woven carbon fibre texture at an angle — fakes substitute painted metal; tap it with a fingernail and genuine carbon produces a dull soft thud, not a metallic ring",
