@@ -22,5 +22,15 @@
       "Genuine Fujikura Ventus Red stock shaft has Fujikura's own serial code near the tip — fakes use plain unbranded blanks"
     ],
     "authenticityNotes": "The Stealth series is one of the most faked TaylorMade lines due to the distinctive carbon face. The carbon should feel slightly warm to the touch and produce a unique sound."
+  },
+  "25107": {
+    "fakeIndicators": [
+      "Serial on hosel must follow TM + 2-digit year + model letter + 7 digits, laser-etched — fakes have wrong format or shallowly scratched serials",
+      "TaylorMade wordmark uses a proprietary typeface — fakes have subtly different letter spacing or stroke weight",
+      "Paint fill on all markings should have crisp, uniform edges — fakes show bleeding paint or flat matte fill",
+      "Clubhead weight within 2g of published specification — fakes vary 5-10g",
+      "Stock shaft carries the shaft manufacturer's own serial near the tip — fakes use unbranded graphite blanks"
+    ],
+    "authenticityNotes": ""
   }
 }
