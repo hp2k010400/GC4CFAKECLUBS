@@ -3,6 +3,26 @@
     "fakeIndicators": [],
     "authenticityNotes": ""
   },
+  "1106": {
+    "fakeIndicators": [
+      "Serial on hosel must follow TM + 2-digit year + D/W/H + 7 digits (e.g. TM22D1234567), laser-etched — fakes have wrong format, too few characters, or shallowly scratched serials",
+      "The TaylorMade wordmark on the sole uses a proprietary typeface — fakes have subtly different letter spacing or stroke weight, most visible when compared directly",
+      "Crown graphics must be perfectly centred with zero print bleed — fakes have off-centre logos or paint bleeding outside the lines",
+      "Clubhead weight within 2g of the published specification — counterfeits vary 5-10g due to cheaper casting metal",
+      "Stock shaft (Fujikura, Mitsubishi, Project X) carries the shaft manufacturer's own serial code near the tip — fakes use plain, unbranded graphite blanks"
+    ],
+    "authenticityNotes": "TaylorMade drivers are among the most counterfeited clubs in the world. TaylorMade offer authenticity checks via taylormadegolf.com — contact support with the serial number to verify. On modern carbon face models (Stealth, Qi series), tapping the face with a fingernail should produce a dull soft thud, not a metallic ring."
+  },
+  "3035": {
+    "fakeIndicators": [
+      "Sole printing on G-series drivers should be gray-toned — fakes display a slightly brownish or yellowed tint that is obvious in direct comparison",
+      "The tungsten weight inscription on the G-series sole confirms the internal weight placement — fakes often omit this marking entirely",
+      "Genuine G-series headcovers have gray-embroidered PING branding — counterfeit covers use white embroidery instead of the correct gray",
+      "Serial on hosel — PING customer service will verify any serial number; always check before a secondhand purchase",
+      "Stock shaft carries the manufacturer's own serial near the tip — fakes use unbranded graphite blanks"
+    ],
+    "authenticityNotes": "PING operates a tightly controlled distribution network. Counterfeits primarily target G-series drivers. PING customer service will authenticate any club by serial number at ping.com."
+  },
   "3176": {
     "fakeIndicators": [
       "Serial on hosel must follow TM + 2-digit year + D/W/H + 7 digits (e.g. TM22D1234567), laser-etched — fakes have wrong format, too few characters, or shallowly scratched serials",
@@ -22,6 +42,16 @@
       "Genuine Fujikura Ventus Red stock shaft has Fujikura's own serial code near the tip — fakes use plain unbranded blanks"
     ],
     "authenticityNotes": "The Stealth series is one of the most faked TaylorMade lines due to the distinctive carbon face. The carbon should feel slightly warm to the touch and produce a unique sound."
+  },
+  "24442": {
+    "fakeIndicators": [
+      "The Qi10 uses a 60X Carbon Twist Face — tap the face with a fingernail; genuine carbon produces a dull thud, not a metallic ring",
+      "The internal carbon rib structure visible through the aft crown should form a bifurcated pattern — if solid or differently shaped, the club is counterfeit",
+      "Serial TM24D + 7 digits on hosel, precisely laser-etched — fakes have shallowly stamped or incomplete serials",
+      "Sole printing should be crisp with no paint bleed — counterfeits show bleeding edges",
+      "Stock Fujikura Ventus shaft has manufacturer's serial near tip — fakes use unbranded blanks"
+    ],
+    "authenticityNotes": "TaylorMade drivers are among the most counterfeited clubs in the world. TaylorMade offer authenticity checks via taylormadegolf.com — contact support with the serial number to verify. On modern carbon face models (Stealth, Qi series), tapping the face with a fingernail should produce a dull soft thud, not a metallic ring."
   },
   "25107": {
     "fakeIndicators": [
