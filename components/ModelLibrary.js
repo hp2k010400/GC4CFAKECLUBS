@@ -21,6 +21,53 @@ function normalizeType(type) {
   return TYPE_MAP[type.toLowerCase()] || type
 }
 
+const BRAND_PRIORITY = {
+  'Scotty Cameron': 1,
+  'Taylormade': 2,
+  'Callaway': 3,
+  'Titleist': 4,
+  'Ping': 5,
+  'PXG': 6,
+  'Cleveland': 7,
+  'Cobra': 8,
+  'Honma': 9,
+  'XXIO': 10,
+  'Odyssey': 11,
+  'Mizuno': 12,
+  'Srixon': 13,
+  'Miura': 14,
+  'Nike': 15,
+}
+
+const TYPE_PRIORITY = {
+  'Putter': 1,
+  'Driver': 2,
+  'Irons': 3,
+  'Individual Iron': 4,
+  'Wedge': 5,
+  'Fairway Wood': 6,
+  'Hybrid': 7,
+}
+
+// Brands shown as quick-filter pills, in counterfeit-risk order
+const PRIORITY_BRAND_LIST = [
+  'Scotty Cameron', 'Taylormade', 'Callaway', 'Titleist',
+  'Ping', 'PXG', 'Cleveland', 'Cobra', 'Honma', 'XXIO', 'Odyssey',
+]
+
+// Correct display capitalisation where data differs
+const BRAND_DISPLAY = { 'Taylormade': 'TaylorMade' }
+
+function sortByCounterfeitPopularity(a, b) {
+  const aBrand = BRAND_PRIORITY[a.brand] ?? 99
+  const bBrand = BRAND_PRIORITY[b.brand] ?? 99
+  if (aBrand !== bBrand) return aBrand - bBrand
+  const aType = TYPE_PRIORITY[a.productType] ?? 99
+  const bType = TYPE_PRIORITY[b.productType] ?? 99
+  if (aType !== bType) return aType - bType
+  return (b.year || 0) - (a.year || 0)
+}
+
 function SearchIcon() {
   return (
     <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -41,7 +88,6 @@ function SkeletonCard() {
           <div className="h-5 bg-slate-100 rounded w-10" />
           <div className="h-5 bg-slate-100 rounded w-14" />
         </div>
-        <div className="h-8 bg-slate-100 rounded-lg mt-2" />
       </div>
     </div>
   )
@@ -66,7 +112,6 @@ function Pagination({ page, totalPages, onPageChange }) {
       >
         Previous
       </button>
-
       <div className="flex gap-1">
         {getPages().map((p, i) =>
           p === '...' ? (
@@ -76,9 +121,7 @@ function Pagination({ page, totalPages, onPageChange }) {
               key={p}
               onClick={() => onPageChange(p)}
               className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                page === p
-                  ? 'text-white'
-                  : 'border border-slate-300 text-slate-700 hover:bg-slate-50'
+                page === p ? 'text-white' : 'border border-slate-300 text-slate-700 hover:bg-slate-50'
               }`}
               style={page === p ? { backgroundColor: '#005F2C' } : {}}
             >
@@ -87,7 +130,6 @@ function Pagination({ page, totalPages, onPageChange }) {
           )
         )}
       </div>
-
       <button
         onClick={() => onPageChange(page + 1)}
         disabled={page === totalPages}
@@ -107,6 +149,7 @@ export default function ModelLibrary() {
   const [brandFilter, setBrandFilter] = useState('')
   const [yearFilter, setYearFilter] = useState('')
   const [handFilter, setHandFilter] = useState('')
+  const [browseAll, setBrowseAll] = useState(false)
   const [page, setPage] = useState(1)
   const [selectedModel, setSelectedModel] = useState(null)
 
@@ -136,6 +179,7 @@ export default function ModelLibrary() {
     total: models.length,
     brands: new Set(models.map(m => m.brand).filter(Boolean)).size,
     documented: models.filter(m => m.fakeIndicators?.length > 0).length,
+    priorityCount: models.filter(m => BRAND_PRIORITY[m.brand] !== undefined).length,
   }), [models])
 
   const productTypes = useMemo(() => {
@@ -143,18 +187,22 @@ export default function ModelLibrary() {
     return ['All', ...types]
   }, [models])
 
-  const brands = useMemo(() =>
-    [...new Set(models.map(m => m.brand).filter(Boolean))].sort(),
-    [models]
-  )
-
   const years = useMemo(() =>
     [...new Set(models.map(m => m.year).filter(Boolean))].sort((a, b) => b - a),
     [models]
   )
 
+  // Curated mode: no browse-all, no active search (search always spans everything)
+  const curated = !browseAll && !search.trim()
+
   const filtered = useMemo(() => {
     let result = models
+
+    // In curated mode, restrict to the top-counterfeited brands
+    if (!browseAll && !search.trim()) {
+      result = result.filter(m => BRAND_PRIORITY[m.brand] !== undefined)
+    }
+
     if (search.trim()) {
       const q = search.toLowerCase().trim()
       result = result.filter(m =>
@@ -168,17 +216,20 @@ export default function ModelLibrary() {
     if (brandFilter) result = result.filter(m => m.brand === brandFilter)
     if (yearFilter) result = result.filter(m => String(m.year) === yearFilter)
     if (handFilter) result = result.filter(m => m.hand === handFilter)
-    return result
-  }, [models, search, typeFilter, brandFilter, yearFilter, handFilter])
+
+    return [...result].sort(sortByCounterfeitPopularity)
+  }, [models, search, typeFilter, brandFilter, yearFilter, handFilter, browseAll])
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
-  useEffect(() => { setPage(1) }, [search, typeFilter, brandFilter, yearFilter, handFilter])
+  useEffect(() => { setPage(1) }, [search, typeFilter, brandFilter, yearFilter, handFilter, browseAll])
 
-  const hasFilters = search || typeFilter !== 'All' || brandFilter || yearFilter || handFilter
+  const hasFilters = search || brandFilter || typeFilter !== 'All' || yearFilter || handFilter
+
   const resetFilters = () => {
     setSearch(''); setTypeFilter('All'); setBrandFilter(''); setYearFilter(''); setHandFilter('')
+    setBrowseAll(false)
   }
 
   if (loading) {
@@ -187,7 +238,7 @@ export default function ModelLibrary() {
         <section className="bg-white border-b border-slate-100 py-14 px-4">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <div className="h-3 bg-slate-200 rounded w-32 mx-auto animate-pulse" />
-            <div className="h-10 bg-slate-200 rounded w-56 mx-auto animate-pulse" />
+            <div className="h-10 bg-slate-200 rounded w-64 mx-auto animate-pulse" />
             <div className="h-5 bg-slate-200 rounded w-72 mx-auto animate-pulse" />
             <div className="h-14 bg-slate-100 rounded-xl max-w-2xl mx-auto animate-pulse mt-6" />
           </div>
@@ -210,12 +261,15 @@ export default function ModelLibrary() {
           <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: '#005F2C' }}>
             GolfClubs4Cash
           </p>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-3 tracking-tight" style={{ color: '#005F2C' }}>
-            How to Spot Fake Clubs
+          <h1 className="text-4xl sm:text-5xl font-bold mb-3 tracking-tight text-slate-900">
+            Most Counterfeited<br />
+            <span style={{ color: '#005F2C' }}>Golf Clubs</span>
           </h1>
-          <p className="text-slate-500 text-base sm:text-lg mb-8 max-w-xl mx-auto">
-            Reference library for identifying counterfeit golf equipment.{' '}
-            <span className="text-slate-700 font-medium">{stats.total.toLocaleString()} models across {stats.brands} brands.</span>
+          <p className="text-slate-500 text-base sm:text-lg mb-1 max-w-xl mx-auto">
+            The brands and models most frequently targeted by counterfeiters.
+          </p>
+          <p className="text-slate-400 text-sm mb-8">
+            {stats.documented.toLocaleString()} models documented &middot; {stats.total.toLocaleString()} in library across {stats.brands} brands
           </p>
           <div className="relative max-w-2xl mx-auto">
             <SearchIcon />
@@ -223,47 +277,52 @@ export default function ModelLibrary() {
               type="search"
               value={search}
               onChange={e => setSearch(e.target.value)}
-              placeholder="Search by model name, brand, or product type…"
+              placeholder="Search any model, brand, or product type…"
               className="w-full py-4 pl-12 pr-6 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#005F2C] focus:ring-1 focus:ring-[#005F2C] text-base transition-colors shadow-sm"
             />
           </div>
         </div>
       </section>
 
-      {/* Stats bar */}
-      <div className="bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center gap-x-8 gap-y-1">
-          <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold" style={{ color: '#005F2C' }}>{stats.total.toLocaleString()}</span>
-            <span className="text-sm text-slate-500">models</span>
-          </div>
-          <div className="flex items-baseline gap-2">
-            <span className="text-xl font-bold" style={{ color: '#005F2C' }}>{stats.brands}</span>
-            <span className="text-sm text-slate-500">brands</span>
-          </div>
-          {stats.documented > 0 && (
-            <div className="flex items-baseline gap-2">
-              <span className="text-xl font-bold" style={{ color: '#005F2C' }}>{stats.documented.toLocaleString()}</span>
-              <span className="text-sm text-slate-500">documented</span>
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* Sticky filters */}
       <div className="sticky top-0 z-10 bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 space-y-2.5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-2 space-y-2">
 
-          {/* Product type pills */}
+          {/* Brand pills */}
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
+            {PRIORITY_BRAND_LIST.map(brand => (
+              <button
+                key={brand}
+                onClick={() => { setBrandFilter(prev => prev === brand ? '' : brand); setBrowseAll(false) }}
+                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
+                  brandFilter === brand ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+                style={brandFilter === brand ? { backgroundColor: '#005F2C' } : {}}
+              >
+                {BRAND_DISPLAY[brand] || brand}
+              </button>
+            ))}
+            <div className="flex-none border-l border-slate-200 pl-3 ml-1">
+              <button
+                onClick={() => { setBrowseAll(true); setBrandFilter('') }}
+                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
+                  browseAll && !brandFilter ? 'text-white' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
+                }`}
+                style={browseAll && !brandFilter ? { backgroundColor: '#005F2C' } : {}}
+              >
+                Browse all {stats.total.toLocaleString()} →
+              </button>
+            </div>
+          </div>
+
+          {/* Type pills */}
           <div className="flex gap-2 overflow-x-auto scrollbar-none">
             {productTypes.map(type => (
               <button
                 key={type}
                 onClick={() => setTypeFilter(type)}
-                className={`flex-none px-4 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
-                  typeFilter === type
-                    ? 'text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
+                  typeFilter === type ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
                 style={typeFilter === type ? { backgroundColor: '#005F2C' } : {}}
               >
@@ -272,17 +331,8 @@ export default function ModelLibrary() {
             ))}
           </div>
 
-          {/* Secondary filters row */}
-          <div className="flex flex-wrap items-center gap-2">
-            <select
-              value={brandFilter}
-              onChange={e => setBrandFilter(e.target.value)}
-              className="text-sm border border-slate-300 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#005F2C] focus:border-[#005F2C]"
-            >
-              <option value="">All Brands</option>
-              {brands.map(b => <option key={b} value={b}>{b}</option>)}
-            </select>
-
+          {/* Secondary row */}
+          <div className="flex flex-wrap items-center gap-2 pb-1">
             <select
               value={yearFilter}
               onChange={e => setYearFilter(e.target.value)}
@@ -302,7 +352,7 @@ export default function ModelLibrary() {
               <option value="Left-Handed">Left-Handed</option>
             </select>
 
-            {hasFilters && (
+            {(hasFilters || browseAll) && (
               <button
                 onClick={resetFilters}
                 className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-800 transition-colors"
@@ -310,12 +360,15 @@ export default function ModelLibrary() {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                Clear
+                {browseAll && !hasFilters ? 'Back to top fakes' : 'Clear'}
               </button>
             )}
 
             <span className="text-sm text-slate-500 ml-auto">
-              {filtered.length.toLocaleString()} result{filtered.length !== 1 ? 's' : ''}
+              {filtered.length.toLocaleString()}{' '}
+              {curated && !brandFilter && typeFilter === 'All' && !yearFilter && !handFilter
+                ? 'most counterfeited models'
+                : `result${filtered.length !== 1 ? 's' : ''}`}
             </span>
           </div>
         </div>
