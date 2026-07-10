@@ -1,8 +1,16 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function ModelDrawer({ model, onClose }) {
+  const [copied, setCopied] = useState(false)
+
+  const copyId = () => {
+    navigator.clipboard.writeText(String(model.id))
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+
   useEffect(() => {
     const handleEsc = e => { if (e.key === 'Escape') onClose() }
     document.addEventListener('keydown', handleEsc)
@@ -46,6 +54,15 @@ export default function ModelDrawer({ model, onClose }) {
                   {model.brand}
                 </p>
                 <h2 className="font-bold text-slate-900 text-lg leading-tight">{model.name}</h2>
+                <button
+                  onClick={copyId}
+                  className="mt-1 flex items-center gap-1.5 text-[11px] font-mono text-slate-400 hover:text-slate-600 transition-colors group"
+                >
+                  <span>ID: {model.id}</span>
+                  <span className="text-[10px] font-sans font-medium px-1.5 py-0.5 rounded bg-slate-100 group-hover:bg-slate-200 transition-colors">
+                    {copied ? '✓ Copied' : 'Copy'}
+                  </span>
+                </button>
               </div>
               <button
                 onClick={onClose}
