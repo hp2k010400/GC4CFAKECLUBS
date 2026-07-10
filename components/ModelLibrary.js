@@ -49,16 +49,34 @@ const TYPE_PRIORITY = {
   'Hybrid': 7,
 }
 
-// Brands shown as quick-filter pills, in counterfeit-risk order
+const BRAND_DISPLAY = { 'Taylormade': 'TaylorMade' }
+
 const PRIORITY_BRAND_LIST = [
   'Scotty Cameron', 'Taylormade', 'Callaway', 'Titleist',
   'Ping', 'PXG', 'Cleveland', 'Cobra', 'Honma', 'XXIO', 'Odyssey',
 ]
 
-// Correct display capitalisation where data differs
-const BRAND_DISPLAY = { 'Taylormade': 'TaylorMade' }
+// Curated sections shown on the landing page, in counterfeit-risk order
+const SECTIONS = [
+  { brand: 'Scotty Cameron', type: 'Putter',  label: 'Scotty Cameron Putters' },
+  { brand: 'Taylormade',     type: 'Driver',  label: 'TaylorMade Drivers' },
+  { brand: 'Taylormade',     type: 'Irons',   label: 'TaylorMade Irons' },
+  { brand: 'Callaway',       type: 'Driver',  label: 'Callaway Drivers' },
+  { brand: 'Callaway',       type: 'Irons',   label: 'Callaway Irons' },
+  { brand: 'Titleist',       type: 'Driver',  label: 'Titleist Drivers' },
+  { brand: 'Titleist',       type: 'Irons',   label: 'Titleist Irons' },
+  { brand: 'Ping',           type: 'Driver',  label: 'Ping Drivers' },
+  { brand: 'Ping',           type: 'Irons',   label: 'Ping Irons' },
+  { brand: 'PXG',            type: 'Driver',  label: 'PXG Drivers' },
+  { brand: 'PXG',            type: 'Irons',   label: 'PXG Irons' },
+  { brand: 'Cleveland',      type: 'Wedge',   label: 'Cleveland Wedges' },
+  { brand: 'Cobra',          type: 'Driver',  label: 'Cobra Drivers' },
+  { brand: 'Honma',          type: 'Driver',  label: 'Honma Drivers' },
+  { brand: 'Mizuno',         type: 'Irons',   label: 'Mizuno Irons' },
+  { brand: 'Odyssey',        type: 'Putter',  label: 'Odyssey Putters' },
+]
 
-function sortByCounterfeitPopularity(a, b) {
+function sortGrid(a, b) {
   const aBrand = BRAND_PRIORITY[a.brand] ?? 99
   const bBrand = BRAND_PRIORITY[b.brand] ?? 99
   if (aBrand !== bBrand) return aBrand - bBrand
@@ -68,10 +86,21 @@ function sortByCounterfeitPopularity(a, b) {
   return (b.year || 0) - (a.year || 0)
 }
 
-function SearchIcon() {
+function SearchIcon({ small }) {
   return (
-    <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg
+      className={`absolute top-1/2 -translate-y-1/2 text-slate-400 ${small ? 'left-3 w-4 h-4' : 'left-4 w-5 h-5'}`}
+      fill="none" stroke="currentColor" viewBox="0 0 24 24"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+    </svg>
+  )
+}
+
+function BackIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
     </svg>
   )
 }
@@ -105,51 +134,42 @@ function Pagination({ page, totalPages, onPageChange }) {
 
   return (
     <div className="flex items-center justify-center gap-1.5 mt-10 pb-2">
-      <button
-        onClick={() => onPageChange(page - 1)}
-        disabled={page === 1}
-        className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium text-slate-700 disabled:opacity-40 hover:bg-slate-50 disabled:cursor-not-allowed transition-colors"
-      >
+      <button onClick={() => onPageChange(page - 1)} disabled={page === 1}
+        className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium text-slate-700 disabled:opacity-40 hover:bg-slate-50 disabled:cursor-not-allowed transition-colors">
         Previous
       </button>
       <div className="flex gap-1">
         {getPages().map((p, i) =>
           p === '...' ? (
-            <span key={`ellipsis-${i}`} className="w-9 h-9 flex items-center justify-center text-slate-400 text-sm">…</span>
+            <span key={`e${i}`} className="w-9 h-9 flex items-center justify-center text-slate-400 text-sm">…</span>
           ) : (
-            <button
-              key={p}
-              onClick={() => onPageChange(p)}
-              className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                page === p ? 'text-white' : 'border border-slate-300 text-slate-700 hover:bg-slate-50'
-              }`}
-              style={page === p ? { backgroundColor: '#005F2C' } : {}}
-            >
+            <button key={p} onClick={() => onPageChange(p)}
+              className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${page === p ? 'text-white' : 'border border-slate-300 text-slate-700 hover:bg-slate-50'}`}
+              style={page === p ? { backgroundColor: '#005F2C' } : {}}>
               {p}
             </button>
           )
         )}
       </div>
-      <button
-        onClick={() => onPageChange(page + 1)}
-        disabled={page === totalPages}
-        className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium text-slate-700 disabled:opacity-40 hover:bg-slate-50 disabled:cursor-not-allowed transition-colors"
-      >
+      <button onClick={() => onPageChange(page + 1)} disabled={page === totalPages}
+        className="px-4 py-2 rounded-lg border border-slate-300 text-sm font-medium text-slate-700 disabled:opacity-40 hover:bg-slate-50 disabled:cursor-not-allowed transition-colors">
         Next
       </button>
     </div>
   )
 }
 
+const selectCls = 'text-sm border border-slate-300 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#005F2C] focus:border-[#005F2C]'
+
 export default function ModelLibrary() {
   const [models, setModels] = useState([])
   const [loading, setLoading] = useState(true)
+  const [view, setView] = useState('sections') // 'sections' | 'grid'
   const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState('All')
   const [brandFilter, setBrandFilter] = useState('')
   const [yearFilter, setYearFilter] = useState('')
   const [handFilter, setHandFilter] = useState('')
-  const [browseAll, setBrowseAll] = useState(false)
   const [page, setPage] = useState(1)
   const [selectedModel, setSelectedModel] = useState(null)
 
@@ -163,12 +183,7 @@ export default function ModelLibrary() {
       const merged = data.map(m => {
         const fd = overrides[m.id] || fakeData[m.id]
         const fi = fakeImages[String(m.id)] || []
-        return {
-          ...m,
-          fakeIndicators: fd?.fakeIndicators || [],
-          authenticityNotes: fd?.authenticityNotes || '',
-          fakeImages: fi,
-        }
+        return { ...m, fakeIndicators: fd?.fakeIndicators || [], authenticityNotes: fd?.authenticityNotes || '', fakeImages: fi }
       })
       setModels(merged)
       setLoading(false)
@@ -179,7 +194,6 @@ export default function ModelLibrary() {
     total: models.length,
     brands: new Set(models.map(m => m.brand).filter(Boolean)).size,
     documented: models.filter(m => m.fakeIndicators?.length > 0).length,
-    priorityCount: models.filter(m => BRAND_PRIORITY[m.brand] !== undefined).length,
   }), [models])
 
   const productTypes = useMemo(() => {
@@ -192,17 +206,20 @@ export default function ModelLibrary() {
     [models]
   )
 
-  // Curated mode: no browse-all, no active search (search always spans everything)
-  const curated = !browseAll && !search.trim()
+  // Per-section data for the landing rows
+  const sectionData = useMemo(() =>
+    SECTIONS.map(s => ({
+      ...s,
+      models: models
+        .filter(m => m.brand === s.brand && normalizeType(m.productType) === s.type)
+        .sort((a, b) => (b.year || 0) - (a.year || 0)),
+    })).filter(s => s.models.length > 0),
+    [models]
+  )
 
+  // Full filtered + sorted list for the grid view
   const filtered = useMemo(() => {
     let result = models
-
-    // In curated mode, restrict to the top-counterfeited brands
-    if (!browseAll && !search.trim()) {
-      result = result.filter(m => BRAND_PRIORITY[m.brand] !== undefined)
-    }
-
     if (search.trim()) {
       const q = search.toLowerCase().trim()
       result = result.filter(m =>
@@ -216,20 +233,42 @@ export default function ModelLibrary() {
     if (brandFilter) result = result.filter(m => m.brand === brandFilter)
     if (yearFilter) result = result.filter(m => String(m.year) === yearFilter)
     if (handFilter) result = result.filter(m => m.hand === handFilter)
-
-    return [...result].sort(sortByCounterfeitPopularity)
-  }, [models, search, typeFilter, brandFilter, yearFilter, handFilter, browseAll])
+    return [...result].sort(sortGrid)
+  }, [models, search, typeFilter, brandFilter, yearFilter, handFilter])
 
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE)
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
 
-  useEffect(() => { setPage(1) }, [search, typeFilter, brandFilter, yearFilter, handFilter, browseAll])
+  useEffect(() => { setPage(1) }, [search, typeFilter, brandFilter, yearFilter, handFilter])
 
   const hasFilters = search || brandFilter || typeFilter !== 'All' || yearFilter || handFilter
 
-  const resetFilters = () => {
-    setSearch(''); setTypeFilter('All'); setBrandFilter(''); setYearFilter(''); setHandFilter('')
-    setBrowseAll(false)
+  const goToGrid = (brand = '', type = 'All') => {
+    setBrandFilter(brand)
+    setTypeFilter(type)
+    setSearch('')
+    setPage(1)
+    setView('grid')
+  }
+
+  const goToSections = () => {
+    setView('sections')
+    setSearch('')
+    setBrandFilter('')
+    setTypeFilter('All')
+    setYearFilter('')
+    setHandFilter('')
+    setPage(1)
+  }
+
+  const clearFilters = () => {
+    setSearch(''); setBrandFilter(''); setTypeFilter('All'); setYearFilter(''); setHandFilter('')
+  }
+
+  const onHeroSearch = e => {
+    const val = e.target.value
+    setSearch(val)
+    if (val.trim()) { setBrandFilter(''); setTypeFilter('All'); setView('grid') }
   }
 
   if (loading) {
@@ -238,81 +277,157 @@ export default function ModelLibrary() {
         <section className="bg-white border-b border-slate-100 py-14 px-4">
           <div className="max-w-3xl mx-auto text-center space-y-4">
             <div className="h-3 bg-slate-200 rounded w-32 mx-auto animate-pulse" />
-            <div className="h-10 bg-slate-200 rounded w-64 mx-auto animate-pulse" />
-            <div className="h-5 bg-slate-200 rounded w-72 mx-auto animate-pulse" />
+            <div className="h-12 bg-slate-200 rounded w-72 mx-auto animate-pulse" />
+            <div className="h-5 bg-slate-200 rounded w-80 mx-auto animate-pulse" />
             <div className="h-14 bg-slate-100 rounded-xl max-w-2xl mx-auto animate-pulse mt-6" />
           </div>
         </section>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {Array.from({ length: 12 }).map((_, i) => <SkeletonCard key={i} />)}
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 space-y-10">
+          {[1, 2, 3].map(i => (
+            <div key={i}>
+              <div className="h-6 bg-slate-200 rounded w-48 mb-4 animate-pulse" />
+              <div className="flex gap-4">
+                {Array.from({ length: 5 }).map((_, j) => <div key={j} className="flex-none w-48"><SkeletonCard /></div>)}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     )
   }
 
+  // ── SECTIONS VIEW ──────────────────────────────────────────────────────────
+  if (view === 'sections') {
+    return (
+      <div className="min-h-screen bg-slate-50">
+
+        <section className="bg-white border-b border-slate-100 py-14 px-4">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: '#005F2C' }}>
+              GolfClubs4Cash
+            </p>
+            <h1 className="text-4xl sm:text-5xl font-bold mb-3 tracking-tight text-slate-900">
+              Most Counterfeited<br />
+              <span style={{ color: '#005F2C' }}>Golf Clubs</span>
+            </h1>
+            <p className="text-slate-500 text-base sm:text-lg mb-1 max-w-xl mx-auto">
+              The brands and models most frequently targeted by counterfeiters.
+            </p>
+            <p className="text-slate-400 text-sm mb-8">
+              {stats.documented.toLocaleString()} models documented &middot; {stats.total.toLocaleString()} in library across {stats.brands} brands
+            </p>
+            <div className="relative max-w-2xl mx-auto">
+              <SearchIcon />
+              <input
+                type="search"
+                value={search}
+                onChange={onHeroSearch}
+                placeholder="Search any model, brand, or product type…"
+                className="w-full py-4 pl-12 pr-6 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#005F2C] focus:ring-1 focus:ring-[#005F2C] text-base transition-colors shadow-sm"
+              />
+            </div>
+          </div>
+        </section>
+
+        <main className="max-w-7xl mx-auto py-8 space-y-10">
+          {sectionData.map(s => (
+            <div key={s.label}>
+              <div className="flex items-baseline justify-between mb-3 px-4 sm:px-6">
+                <h2 className="text-lg font-bold text-slate-900">{s.label}</h2>
+                <button
+                  onClick={() => goToGrid(s.brand, s.type)}
+                  className="text-sm font-medium whitespace-nowrap hover:underline ml-4"
+                  style={{ color: '#005F2C' }}
+                >
+                  See all {s.models.length} →
+                </button>
+              </div>
+              <div className="flex gap-3 overflow-x-auto scrollbar-none px-4 sm:px-6 pb-1">
+                {s.models.slice(0, 10).map(model => (
+                  <div key={model.id} className="flex-none w-44 sm:w-48">
+                    <ModelCard model={model} onClick={() => setSelectedModel(model)} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+
+          <div className="px-4 sm:px-6 pb-10 pt-2 text-center">
+            <button
+              onClick={() => goToGrid()}
+              className="text-sm font-semibold px-6 py-3 rounded-xl text-white transition-opacity hover:opacity-90"
+              style={{ backgroundColor: '#005F2C' }}
+            >
+              Browse all {stats.total.toLocaleString()} models in library →
+            </button>
+          </div>
+        </main>
+
+        <footer className="bg-slate-900 text-slate-500 text-sm py-8 px-4">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-white">GolfClubs4Cash</span>
+              <span className="text-slate-600">·</span>
+              <span>Fake Reference Guide</span>
+            </div>
+            <span className="text-xs text-slate-600">
+              {stats.total.toLocaleString()} models · {stats.brands} brands · Internal &amp; customer reference
+            </span>
+          </div>
+        </footer>
+
+        {selectedModel && <ModelDrawer model={selectedModel} onClose={() => setSelectedModel(null)} />}
+      </div>
+    )
+  }
+
+  // ── GRID VIEW ──────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-slate-50">
 
-      {/* Hero */}
-      <section className="bg-white border-b border-slate-100 py-14 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-xs font-bold tracking-[0.2em] uppercase mb-3" style={{ color: '#005F2C' }}>
-            GolfClubs4Cash
-          </p>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-3 tracking-tight text-slate-900">
-            Most Counterfeited<br />
-            <span style={{ color: '#005F2C' }}>Golf Clubs</span>
-          </h1>
-          <p className="text-slate-500 text-base sm:text-lg mb-1 max-w-xl mx-auto">
-            The brands and models most frequently targeted by counterfeiters.
-          </p>
-          <p className="text-slate-400 text-sm mb-8">
-            {stats.documented.toLocaleString()} models documented &middot; {stats.total.toLocaleString()} in library across {stats.brands} brands
-          </p>
-          <div className="relative max-w-2xl mx-auto">
-            <SearchIcon />
-            <input
-              type="search"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="Search any model, brand, or product type…"
-              className="w-full py-4 pl-12 pr-6 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#005F2C] focus:ring-1 focus:ring-[#005F2C] text-base transition-colors shadow-sm"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Sticky filters */}
       <div className="sticky top-0 z-10 bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-2 space-y-2">
 
+          {/* Back + compact search */}
+          <div className="flex items-center gap-3">
+            <button
+              onClick={goToSections}
+              className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors flex-none"
+            >
+              <BackIcon />
+              Overview
+            </button>
+            <div className="relative flex-1 max-w-sm">
+              <SearchIcon small />
+              <input
+                type="search"
+                value={search}
+                onChange={e => setSearch(e.target.value)}
+                placeholder="Search…"
+                className="w-full py-1.5 pl-9 pr-4 border border-slate-300 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#005F2C] focus:ring-1 focus:ring-[#005F2C] transition-colors"
+              />
+            </div>
+          </div>
+
           {/* Brand pills */}
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
+            <button
+              onClick={() => setBrandFilter('')}
+              className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${!brandFilter ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+              style={!brandFilter ? { backgroundColor: '#005F2C' } : {}}
+            >
+              All
+            </button>
             {PRIORITY_BRAND_LIST.map(brand => (
               <button
                 key={brand}
-                onClick={() => { setBrandFilter(prev => prev === brand ? '' : brand); setBrowseAll(false) }}
-                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
-                  brandFilter === brand ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
+                onClick={() => setBrandFilter(prev => prev === brand ? '' : brand)}
+                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${brandFilter === brand ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
                 style={brandFilter === brand ? { backgroundColor: '#005F2C' } : {}}
               >
                 {BRAND_DISPLAY[brand] || brand}
               </button>
             ))}
-            <div className="flex-none border-l border-slate-200 pl-3 ml-1">
-              <button
-                onClick={() => { setBrowseAll(true); setBrandFilter('') }}
-                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
-                  browseAll && !brandFilter ? 'text-white' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
-                }`}
-                style={browseAll && !brandFilter ? { backgroundColor: '#005F2C' } : {}}
-              >
-                Browse all {stats.total.toLocaleString()} →
-              </button>
-            </div>
           </div>
 
           {/* Type pills */}
@@ -321,9 +436,7 @@ export default function ModelLibrary() {
               <button
                 key={type}
                 onClick={() => setTypeFilter(type)}
-                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${
-                  typeFilter === type ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
+                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${typeFilter === type ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
                 style={typeFilter === type ? { backgroundColor: '#005F2C' } : {}}
               >
                 {type}
@@ -333,59 +446,37 @@ export default function ModelLibrary() {
 
           {/* Secondary row */}
           <div className="flex flex-wrap items-center gap-2 pb-1">
-            <select
-              value={yearFilter}
-              onChange={e => setYearFilter(e.target.value)}
-              className="text-sm border border-slate-300 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#005F2C] focus:border-[#005F2C]"
-            >
+            <select value={yearFilter} onChange={e => setYearFilter(e.target.value)} className={selectCls}>
               <option value="">All Years</option>
               {years.map(y => <option key={y} value={String(y)}>{y}</option>)}
             </select>
-
-            <select
-              value={handFilter}
-              onChange={e => setHandFilter(e.target.value)}
-              className="text-sm border border-slate-300 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#005F2C] focus:border-[#005F2C]"
-            >
+            <select value={handFilter} onChange={e => setHandFilter(e.target.value)} className={selectCls}>
               <option value="">Both Hands</option>
               <option value="Right-Handed">Right-Handed</option>
               <option value="Left-Handed">Left-Handed</option>
             </select>
-
-            {(hasFilters || browseAll) && (
-              <button
-                onClick={resetFilters}
-                className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-800 transition-colors"
-              >
+            {hasFilters && (
+              <button onClick={clearFilters} className="flex items-center gap-1 text-sm text-slate-500 hover:text-slate-800 transition-colors">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                {browseAll && !hasFilters ? 'Back to top fakes' : 'Clear'}
+                Clear
               </button>
             )}
-
             <span className="text-sm text-slate-500 ml-auto">
-              {filtered.length.toLocaleString()}{' '}
-              {curated && !brandFilter && typeFilter === 'All' && !yearFilter && !handFilter
-                ? 'most counterfeited models'
-                : `result${filtered.length !== 1 ? 's' : ''}`}
+              {filtered.length.toLocaleString()} result{filtered.length !== 1 ? 's' : ''}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Grid */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         {filtered.length === 0 ? (
           <div className="text-center py-24">
             <div className="text-5xl mb-4">🔍</div>
             <p className="text-slate-500 text-lg font-medium">No models match your search</p>
             <p className="text-slate-400 text-sm mt-1 mb-5">Try adjusting your filters or search term</p>
-            <button
-              onClick={resetFilters}
-              className="text-sm font-semibold px-5 py-2.5 rounded-lg text-white transition-opacity hover:opacity-90"
-              style={{ backgroundColor: '#005F2C' }}
-            >
+            <button onClick={clearFilters} className="text-sm font-semibold px-5 py-2.5 rounded-lg text-white transition-opacity hover:opacity-90" style={{ backgroundColor: '#005F2C' }}>
               Clear all filters
             </button>
           </div>
@@ -393,11 +484,7 @@ export default function ModelLibrary() {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
               {paginated.map(model => (
-                <ModelCard
-                  key={model.id}
-                  model={model}
-                  onClick={() => setSelectedModel(model)}
-                />
+                <ModelCard key={model.id} model={model} onClick={() => setSelectedModel(model)} />
               ))}
             </div>
             <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
@@ -405,7 +492,6 @@ export default function ModelLibrary() {
         )}
       </main>
 
-      {/* Footer */}
       <footer className="bg-slate-900 text-slate-500 text-sm py-8 px-4 mt-8">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -419,9 +505,7 @@ export default function ModelLibrary() {
         </div>
       </footer>
 
-      {selectedModel && (
-        <ModelDrawer model={selectedModel} onClose={() => setSelectedModel(null)} />
-      )}
+      {selectedModel && <ModelDrawer model={selectedModel} onClose={() => setSelectedModel(null)} />}
     </div>
   )
 }

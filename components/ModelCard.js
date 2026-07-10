@@ -15,6 +15,11 @@ export default function ModelCard({ model, onClick }) {
           onError={e => { e.currentTarget.src = '/placeholder.svg' }}
           loading="lazy"
         />
+        {hasIndicators && (
+          <div className="absolute top-2 left-2 text-white text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded" style={{ backgroundColor: '#005F2C' }}>
+            Documented
+          </div>
+        )}
         {model.brandLogoUrl && (
           <div className="absolute top-2 right-2 w-8 h-8 bg-white rounded-lg shadow flex items-center justify-center overflow-hidden">
             <img
