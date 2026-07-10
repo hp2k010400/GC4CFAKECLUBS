@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import ModelCard from './ModelCard'
 import ModelDrawer from './ModelDrawer'
 
@@ -160,6 +160,69 @@ function Pagination({ page, totalPages, onPageChange }) {
 }
 
 const selectCls = 'text-sm border border-slate-300 rounded-lg px-3 py-1.5 bg-white text-slate-700 focus:outline-none focus:ring-1 focus:ring-[#005F2C] focus:border-[#005F2C]'
+
+function SectionRow({ section, onCardClick, onSeeAll }) {
+  const scrollRef = useRef(null)
+  const [canLeft, setCanLeft] = useState(false)
+  const [canRight, setCanRight] = useState(false)
+
+  const updateArrows = () => {
+    const el = scrollRef.current
+    if (!el) return
+    setCanLeft(el.scrollLeft > 4)
+    setCanRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4)
+  }
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const t = setTimeout(updateArrows, 120)
+    el.addEventListener('scroll', updateArrows, { passive: true })
+    window.addEventListener('resize', updateArrows)
+    return () => { clearTimeout(t); el.removeEventListener('scroll', updateArrows); window.removeEventListener('resize', updateArrows) }
+  }, [])
+
+  const scroll = dir => {
+    const el = scrollRef.current
+    if (el) el.scrollBy({ left: dir * (192 + 12) * 3, behavior: 'smooth' })
+  }
+
+  return (
+    <div>
+      <div className="flex items-baseline justify-between mb-3 px-4 sm:px-6">
+        <h2 className="text-lg font-bold text-slate-900">{section.label}</h2>
+        <button onClick={onSeeAll} className="text-sm font-medium whitespace-nowrap hover:underline ml-4" style={{ color: '#005F2C' }}>
+          See all {section.models.length} →
+        </button>
+      </div>
+      <div className="relative">
+        {canLeft && (
+          <button onClick={() => scroll(-1)} aria-label="Scroll left"
+            className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-md border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors">
+            <svg className="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+        )}
+        <div ref={scrollRef} className="flex gap-3 overflow-x-auto scrollbar-none px-4 sm:px-6 pb-2">
+          {section.models.slice(0, 20).map(model => (
+            <div key={model.id} className="flex-none w-44 sm:w-48">
+              <ModelCard model={model} onClick={() => onCardClick(model)} />
+            </div>
+          ))}
+        </div>
+        {canRight && (
+          <button onClick={() => scroll(1)} aria-label="Scroll right"
+            className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 bg-white rounded-full shadow-md border border-slate-200 flex items-center justify-center hover:bg-slate-50 transition-colors">
+            <svg className="w-4 h-4 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
 
 export default function ModelLibrary() {
   const [models, setModels] = useState([])
@@ -331,25 +394,12 @@ export default function ModelLibrary() {
 
         <main className="max-w-7xl mx-auto py-8 space-y-10">
           {sectionData.map(s => (
-            <div key={s.label}>
-              <div className="flex items-baseline justify-between mb-3 px-4 sm:px-6">
-                <h2 className="text-lg font-bold text-slate-900">{s.label}</h2>
-                <button
-                  onClick={() => goToGrid(s.brand, s.type)}
-                  className="text-sm font-medium whitespace-nowrap hover:underline ml-4"
-                  style={{ color: '#005F2C' }}
-                >
-                  See all {s.models.length} →
-                </button>
-              </div>
-              <div className="flex gap-3 overflow-x-auto scrollbar-none px-4 sm:px-6 pb-1">
-                {s.models.slice(0, 10).map(model => (
-                  <div key={model.id} className="flex-none w-44 sm:w-48">
-                    <ModelCard model={model} onClick={() => setSelectedModel(model)} />
-                  </div>
-                ))}
-              </div>
-            </div>
+            <SectionRow
+              key={s.label}
+              section={s}
+              onCardClick={setSelectedModel}
+              onSeeAll={() => goToGrid(s.brand, s.type)}
+            />
           ))}
 
           <div className="px-4 sm:px-6 pb-10 pt-2 text-center">
