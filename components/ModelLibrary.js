@@ -385,7 +385,7 @@ export default function ModelLibrary() {
   return (
     <div className="min-h-screen bg-slate-50">
 
-      <div className="sticky top-0 z-10 bg-white border-b border-slate-200 shadow-sm">
+      <div className="sticky top-14 z-10 bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-2 space-y-2">
 
           {/* Back + compact search */}
