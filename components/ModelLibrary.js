@@ -438,8 +438,7 @@ export default function ModelLibrary() {
       <div className="sticky top-14 z-10 bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-2 space-y-2">
 
-          {/* Back + compact search */}
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3 py-1">
             <button
               onClick={goToSections}
               className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors flex-none"
@@ -457,45 +456,6 @@ export default function ModelLibrary() {
                 className="w-full py-1.5 pl-9 pr-4 border border-slate-300 rounded-lg text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#005F2C] focus:ring-1 focus:ring-[#005F2C] transition-colors"
               />
             </div>
-          </div>
-
-          {/* Brand pills */}
-          <div className="flex items-center gap-2 overflow-x-auto scrollbar-none">
-            <button
-              onClick={() => setBrandFilter('')}
-              className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${!brandFilter ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
-              style={!brandFilter ? { backgroundColor: '#005F2C' } : {}}
-            >
-              All
-            </button>
-            {PRIORITY_BRAND_LIST.map(brand => (
-              <button
-                key={brand}
-                onClick={() => setBrandFilter(prev => prev === brand ? '' : brand)}
-                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${brandFilter === brand ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
-                style={brandFilter === brand ? { backgroundColor: '#005F2C' } : {}}
-              >
-                {BRAND_DISPLAY[brand] || brand}
-              </button>
-            ))}
-          </div>
-
-          {/* Type pills */}
-          <div className="flex gap-2 overflow-x-auto scrollbar-none">
-            {productTypes.map(type => (
-              <button
-                key={type}
-                onClick={() => setTypeFilter(type)}
-                className={`flex-none px-3 py-1.5 rounded-full text-sm font-medium transition-colors whitespace-nowrap ${typeFilter === type ? 'text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
-                style={typeFilter === type ? { backgroundColor: '#005F2C' } : {}}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-
-          {/* Secondary row */}
-          <div className="flex flex-wrap items-center gap-2 pb-1">
             <select value={yearFilter} onChange={e => setYearFilter(e.target.value)} className={selectCls}>
               <option value="">All Years</option>
               {years.map(y => <option key={y} value={String(y)}>{y}</option>)}
