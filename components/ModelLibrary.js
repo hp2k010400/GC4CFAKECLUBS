@@ -376,9 +376,25 @@ export default function ModelLibrary() {
             <p className="text-slate-500 text-base sm:text-lg mb-1 max-w-xl mx-auto">
               The brands and models most frequently targeted by counterfeiters.
             </p>
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-400 text-sm mb-8">
               {stats.documented.toLocaleString()} models documented &middot; {stats.total.toLocaleString()} in library across {stats.brands} brands
             </p>
+            <form
+              onSubmit={e => {
+                e.preventDefault()
+                const val = e.target.elements.q.value.trim()
+                if (val) { setSearch(val); setBrandFilter(''); setTypeFilter('All'); setView('grid') }
+              }}
+              className="relative max-w-2xl mx-auto"
+            >
+              <SearchIcon />
+              <input
+                name="q"
+                type="search"
+                placeholder="Search any model, brand, or product type…"
+                className="w-full py-4 pl-12 pr-6 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#005F2C] focus:ring-1 focus:ring-[#005F2C] text-base transition-colors shadow-sm"
+              />
+            </form>
           </div>
         </section>
 
