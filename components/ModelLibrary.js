@@ -362,7 +362,7 @@ export default function ModelLibrary() {
   // ── SECTIONS VIEW ──────────────────────────────────────────────────────────
   if (view === 'sections') {
     return (
-      <div className="min-h-screen bg-slate-50">
+      <div className="min-h-screen bg-slate-50 flex flex-col">
 
         <section className="bg-white border-b border-slate-100 py-14 px-4">
           <div className="max-w-3xl mx-auto text-center">
@@ -376,23 +376,13 @@ export default function ModelLibrary() {
             <p className="text-slate-500 text-base sm:text-lg mb-1 max-w-xl mx-auto">
               The brands and models most frequently targeted by counterfeiters.
             </p>
-            <p className="text-slate-400 text-sm mb-8">
+            <p className="text-slate-400 text-sm">
               {stats.documented.toLocaleString()} models documented &middot; {stats.total.toLocaleString()} in library across {stats.brands} brands
             </p>
-            <div className="relative max-w-2xl mx-auto">
-              <SearchIcon />
-              <input
-                type="search"
-                value={search}
-                onChange={onHeroSearch}
-                placeholder="Search any model, brand, or product type…"
-                className="w-full py-4 pl-12 pr-6 bg-white border border-slate-300 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#005F2C] focus:ring-1 focus:ring-[#005F2C] text-base transition-colors shadow-sm"
-              />
-            </div>
           </div>
         </section>
 
-        <main className="max-w-7xl mx-auto py-8 space-y-10">
+        <main className="flex-1 max-w-7xl w-full mx-auto py-8 space-y-10">
           {sectionData.map(s => (
             <SectionRow
               key={s.label}
@@ -433,7 +423,7 @@ export default function ModelLibrary() {
 
   // ── GRID VIEW ──────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 flex flex-col">
 
       <div className="sticky top-14 z-10 bg-white border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-3 pb-2 space-y-2">
@@ -480,7 +470,7 @@ export default function ModelLibrary() {
         </div>
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6">
         {filtered.length === 0 ? (
           <div className="text-center py-24">
             <div className="text-5xl mb-4">🔍</div>
