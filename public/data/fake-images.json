@@ -249,6 +249,23 @@
       "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1782826606/lyqlpdszf0wuioev8pd3.jpg"
     }
   ],
+  "24800": [
+    {
+      "caption": "Sole Plate does not sit in head correctly - Serial Number is too small - GT3 wording is too small",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784023929/rckzg8awlveeadoavqw4.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784023935/fndcz2zj6yi8tjsnpw3c.jpg"
+    },
+    {
+      "caption": "Face - Colour is slightly off and face is larger on a counterfeit - Overall head shape if compared to another is the wrong shape and size",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784024128/oehrbqsp9vv4criwyttq.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784024132/i1huvhadvyjinxbtzgfq.jpg"
+    },
+    {
+      "caption": "Shaft (Tensei 1K Blue) - Slightly difficult to see but the counterfeit is very light blue rather than darker blue in the first picture",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784024182/mtcg5spx4dtxqi8ptb3h.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784024200/p5d3yncntgf2qek2uzz9.jpg"
+    }
+  ],
   "24996": [
     {
       "caption": "Serial Number and Loft - Too Large and serial number does not line up with the adaptor",
