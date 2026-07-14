@@ -33,6 +33,16 @@
     ],
     "authenticityNotes": "Tapping the face with a fingernail should produce a dull soft thud, not a metallic ring"
   },
+  "19967": {
+    "fakeIndicators": [
+      "The P790 uses a hollow SpeedFoam-filled cavity — genuine irons produce a distinctive hollow, slightly dampened sound at impact; fakes sound like solid cast irons",
+      "Serial on each iron's hosel in TM + year + I + 7 digit format — fakes have wrong format or shallowly scratched serials",
+      "Ferrule length consistent across the set — fakes use shorter, generic ferrules",
+      "Chrome finish perfectly consistent with no visible casting seams or lines across the set",
+      "Head weight progression consistent 7-8g from long to short iron — fakes are inconsistent"
+    ],
+    "authenticityNotes": "TaylorMade irons (P-series, SIM, Qi) are regularly counterfeited. The P790 is particularly widely faked due to its hollow construction and high value. The chrome finish on genuine clubs is more uniform and refined than on counterfeits. Verify serial numbers via TaylorMade customer service."
+  },
   "20336": {
     "fakeIndicators": [
       "The Carbonwood face should show a distinct woven carbon fibre texture at an angle — fakes substitute painted metal; tap it with a fingernail and genuine carbon produces a dull soft thud, not a metallic ring",
