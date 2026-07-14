@@ -43,6 +43,16 @@
     ],
     "authenticityNotes": "Tapping the face with a fingernail should produce a dull soft thud, not a metallic ring"
   },
+  "18444": {
+    "fakeIndicators": [
+      "The G425 MAX turbulator (raised alignment aid) on the crown should match the exact shape — fakes have a simplified or differently proportioned turbulator",
+      "Sole printing is gray-toned on genuine — brownish-yellow tint indicates fake",
+      "PING typeface on sole markings — fakes use generic sans-serif with different letter spacing",
+      "Stock Ping Alta CB Shaft - The grey is very light",
+      "PING customer service serial verification is the definitive check"
+    ],
+    "authenticityNotes": "PING operates a tightly controlled distribution network. Counterfeits primarily target G-series drivers. PING customer service will authenticate any club by serial number at ping.com."
+  },
   "19967": {
     "fakeIndicators": [
       "The P790 uses a hollow SpeedFoam-filled cavity — genuine irons produce a distinctive hollow, slightly dampened sound at impact; fakes sound like solid cast irons",
