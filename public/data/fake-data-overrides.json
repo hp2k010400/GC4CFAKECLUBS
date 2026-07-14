@@ -123,6 +123,16 @@
     ],
     "authenticityNotes": "TaylorMade drivers are among the most counterfeited clubs in the world. TaylorMade offer authenticity checks via taylormadegolf.com — contact support with the serial number to verify. On modern carbon face models (Stealth, Qi series), tapping the face with a fingernail should produce a dull soft thud, not a metallic ring."
   },
+  "24800": {
+    "fakeIndicators": [
+      "Serial laser-etched on the hosel — crisp with no shadow or double-image; a serial that looks stamped or pressed on a modern Titleist driver suggests a fake",
+      "Crown graphics perfectly centred with no print bleed — fakes have off-centre logos or bleeding colour",
+      "The adjustable hosel sleeve should have Titleist micro-engraved on the collar ring — fakes use smooth, unbranded sleeves",
+      "Stock shaft (HZRDUS, Tensei, Kuro Kage) carries the shaft manufacturer's own serial near the tip — fakes use unbranded graphite",
+      "The Titleist holographic security label sits on the underside of the shaft near the grip — fakes place it on the visible top of the shaft"
+    ],
+    "authenticityNotes": "Titleist drivers are less commonly faked than irons/wedges but counterfeits exist for TS and TSR series. Verify serials via Team Titleist at titleist.com/teamtitleist."
+  },
   "24996": {
     "fakeIndicators": [
       "The Qi35 carbon face should produce a soft thud when tapped with a fingernail — a metallic ring indicates painted metal",
