@@ -123,6 +123,16 @@
     ],
     "authenticityNotes": "Callaway irons across all ranges are counterfeited. Forged models (Apex, Apex Pro) have a distinctively soft, dampened feel at impact that cast counterfeits cannot replicate. Verify serial numbers via Callaway customer service."
   },
+  "23229": {
+    "fakeIndicators": [
+      "Ferrule (plastic collar between shaft and hosel) is noticeably longer on genuine Titleist irons than on counterfeits — this is consistent across the whole set and one of the quickest visual checks",
+      "The holographic security label must be on the underside of the shaft near the grip — counterfeits always place it on the top of the shaft where it is easily visible",
+      "Forged models (T100, T100s, AP2, CB, MB) develop natural bag-chatter scuff marks on the topline from soft metal — a used set with no topline marks may be cast counterfeits",
+      "Cavity engraving font on T100/AP2/T-series matches the genuine specification — counterfeit fonts are noticeably larger and the diagonal cavity lines run at a different angle",
+      "Serial laser-etched on each iron's hosel — crisp with no shadow; verify via Team Titleist at titleist.com/teamtitleist"
+    ],
+    "authenticityNotes": "Titleist irons (T100, AP2, CB, MB, 716/718/620) are heavily counterfeited. The ferrule length and security label position are the two quickest checks. Genuine forged irons have a distinctive soft, dampened feel at impact that cast counterfeits cannot replicate."
+  },
   "24405": {
     "fakeIndicators": [
       "Between loft and bounce numbers on genuine Vokey there is a DOT separator — counterfeits use a DASH; fastest single visual check",
