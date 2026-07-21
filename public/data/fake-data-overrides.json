@@ -132,6 +132,16 @@
     ],
     "authenticityNotes": ""
   },
+  "22035": {
+    "fakeIndicators": [
+      "Sole printing should be gray-toned — genuine G430 MAX has gray sole graphics; counterfeits display a brownish or yellowed tint",
+      "The tungsten weight inscription on sole confirms internal weight placement — fakes omit this marking",
+      "Genuine G430 headcovers have gray-embroidered PING branding — fakes use white embroidery",
+      "The hexagonal wrench screw hole on the sole has a specific depth — fakes have a shallower or different-diameter hole",
+      "PING customer service can verify any serial — always check before secondhand purchase"
+    ],
+    "authenticityNotes": "PING operates a tightly controlled distribution network. Counterfeits primarily target G-series drivers. PING customer service will authenticate any club by serial number at ping.com."
+  },
   "22383": {
     "fakeIndicators": [
       "The P790 uses a hollow SpeedFoam-filled cavity — genuine irons produce a distinctive hollow, slightly dampened sound at impact; fakes sound like solid cast irons",
