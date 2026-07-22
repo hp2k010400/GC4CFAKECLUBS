@@ -272,6 +272,16 @@
     ],
     "authenticityNotes": "PING Glide wedges are occasionally faked. The coloured lie-angle dot and groove quality are the key checks. Verify via PING customer service."
   },
+  "24355": {
+    "fakeIndicators": [
+      "FACE - Real L.A.B putters will have 18 grooves, Counterfeits usually have 17",
+      "WEIGHTS - If they come out and show the number on the bottom (8G For Example) This is real",
+      "GRIP - Black ring that goes around the base of the grip is usually squint and does not sit flush with the main body of the grip",
+      "HEADCOVERS - May be smaller and different material, \"L.A.B GOLF\" will most likely be much bigger",
+      "SOLE OF THE HEAD - On the counterfeit models if they have weights in the middle of the head, These will require an allen key to remove them, The writing on the sole will also be thinner on the counterfeits"
+    ],
+    "authenticityNotes": ""
+  },
   "24405": {
     "fakeIndicators": [
       "Between loft and bounce numbers on genuine Vokey there is a DOT separator — counterfeits use a DASH; fastest single visual check",
