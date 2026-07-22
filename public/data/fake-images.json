@@ -432,6 +432,28 @@
       "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1783512485/nhhapnuzsq8itrnmhafs.jpg"
     }
   ],
+  "23114": [
+    {
+      "caption": "Head - Colour of the whole head is more matte and grainy, The counterfeit is more silver on the back of the head. Overall looks nothing like the real club",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784710781/rilnnku8dupde5ezo4re.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784710784/gy9o0puxmxparpzxsblb.jpg"
+    },
+    {
+      "caption": "Serial Number And PING - Serial number is smaller and writing is more bold and so is PING, Again colour and finish is more matte and grainy like",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784710793/wxwdf7guaifu4fmdldss.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784710796/ih6kiw2vohayhjqwsr4h.jpg"
+    },
+    {
+      "caption": "FACE - Shape and colour, neither matches what the real club looks like",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784710804/x3eiaky2pr1ojatvxfib.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784710808/uddzsvhwzviuweldkcyc.jpg"
+    },
+    {
+      "caption": "Weight - Weight port is false and nothing is there",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784710818/gpmimmxdc1nospfhftl9.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784710821/vaxmqlaznkwparok5gpz.jpg"
+    }
+  ],
   "23229": [
     {
       "caption": "Head shape and Colour - Head is wrong shape and size compared to a real club and the colour is more matte than shiny",
