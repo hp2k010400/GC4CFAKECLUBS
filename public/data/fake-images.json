@@ -571,6 +571,28 @@
       "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784715024/se4clw5ui6lssvh2y2jt.jpg"
     }
   ],
+  "23137": [
+    {
+      "caption": "Sole - \"G440\" are brighter on the counterfeit, Everything blue is also darker on the counterfeit",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784715088/msisma2yxrkovhxg2ui7.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784715091/butaytan6gekdwiaus2o.jpg"
+    },
+    {
+      "caption": "Face - The lines that go round the white grooves stand out much more than on the real head, White grooves are also much wider",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784715096/bbudkmsmt8mxkhrok3ll.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784715098/uxnxbe5ceweouvcndltx.jpg"
+    },
+    {
+      "caption": "Top of the head - The crown shows more on the counterfeit",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784715102/qljsvyoabhtbooh79qiq.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784715105/ov3bunp3bwyiagypcx5k.jpg"
+    },
+    {
+      "caption": "Loft - Loft number is brighter and smaller in size",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784715113/c4ae9vmd2mqgryavikmx.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784715117/ojyvojtjxchgfyzm9jsy.jpg"
+    }
+  ],
   "23229": [
     {
       "caption": "Head shape and Colour - Head is wrong shape and size compared to a real club and the colour is more matte than shiny",
