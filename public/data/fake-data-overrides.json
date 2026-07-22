@@ -322,6 +322,16 @@
     ],
     "authenticityNotes": "Titleist drivers are less commonly faked than irons/wedges but counterfeits exist for TS and TSR series. Verify serials via Team Titleist at titleist.com/teamtitleist."
   },
+  "24963": {
+    "fakeIndicators": [
+      "SOLE OF THE HEAD - On the counterfeit, the middle weights will require an allen key to remove them, The writing on the sole will also be thinner on the counterfeits",
+      "FACE - Real L.A.B putters will have 18 grooves, Counterfeits usually have 17",
+      "WEIGHTS - If they come out and show the number on the bottom (8G For Example) This is real",
+      "GRIP - Black ring that goes around the base of the grip is usually squint and does not sit flush with the main body of the grip",
+      "HEADCOVERS - May be smaller and different material, \"L.A.B GOLF\" will most likely be much bigger"
+    ],
+    "authenticityNotes": ""
+  },
   "24996": {
     "fakeIndicators": [
       "The Qi35 carbon face should produce a soft thud when tapped with a fingernail — a metallic ring indicates painted metal",
