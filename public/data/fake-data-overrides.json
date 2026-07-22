@@ -242,6 +242,16 @@
     ],
     "authenticityNotes": "PING irons (i-series, Blueprint, G-series) are counterfeited. The coloured lie-angle dot is one of the clearest tells — it is unique to PING and fakes rarely replicate it correctly. PING verify serials via their customer service team at ping.com."
   },
+  "24116": {
+    "fakeIndicators": [
+      "Every genuine PING wedge has a coloured dot on the hosel for lie angle — fakes frequently omit this or use an incorrect colour/position",
+      "Groove precision: genuine PING Glide wedges have precisely machined grooves with sharp, uniform edges — fakes have cast grooves that are visibly less defined",
+      "Sole finish should be consistently satin with no patchy or shinier areas — fakes have uneven plating",
+      "PING typeface on sole markings is distinctive — fakes substitute a generic sans-serif with slightly different proportions",
+      "Serial on hosel — PING customer service will verify"
+    ],
+    "authenticityNotes": "PING Glide wedges are occasionally faked. The coloured lie-angle dot and groove quality are the key checks. Verify via PING customer service."
+  },
   "24405": {
     "fakeIndicators": [
       "Between loft and bounce numbers on genuine Vokey there is a DOT separator — counterfeits use a DASH; fastest single visual check",
