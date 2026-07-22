@@ -332,6 +332,15 @@
     ],
     "authenticityNotes": "PING operates a tightly controlled distribution network. Counterfeits primarily target G-series drivers. PING customer service will authenticate any club by serial number at ping.com."
   },
+  "24758": {
+    "fakeIndicators": [
+      "FACE - Real L.A.B putters will have 18 grooves, Counterfeits usually have 17",
+      "WEIGHTS - If they come out and show the number on the bottom (8G For Example) This is real",
+      "GRIP - Black ring that goes around the base of the grip is usually squint and does not sit flush with the main body of the grip",
+      "HEADCOVERS - May be smaller and different material, \"L.A.B GOLF\" will most likely be much bigger"
+    ],
+    "authenticityNotes": ""
+  },
   "24800": {
     "fakeIndicators": [
       "Serial laser-etched on the hosel — crisp with no shadow or double-image; a serial that looks stamped or pressed on a modern Titleist driver suggests a fake",
