@@ -242,6 +242,16 @@
     ],
     "authenticityNotes": "Callaway irons across all ranges are counterfeited. Forged models (Apex, Apex Pro) have a distinctively soft, dampened feel at impact that cast counterfeits cannot replicate. Verify serial numbers via Callaway customer service."
   },
+  "23015": {
+    "fakeIndicators": [
+      "Sole printing on G-series drivers should be gray-toned — fakes display a slightly brownish or yellowed tint that is obvious in direct comparison",
+      "The tungsten weight inscription on the G-series sole confirms the internal weight placement — fakes often omit this marking entirely",
+      "Genuine G-series headcovers have gray-embroidered PING branding — counterfeit covers use white embroidery instead of the correct gray",
+      "Serial on hosel — PING customer service will verify any serial number; always check before a secondhand purchase",
+      "Stock shaft carries the manufacturer's own serial near the tip — fakes use unbranded graphite blanks"
+    ],
+    "authenticityNotes": "PING operates a tightly controlled distribution network. Counterfeits primarily target G-series drivers. PING customer service will authenticate any club by serial number at ping.com."
+  },
   "23114": {
     "fakeIndicators": [
       "Every genuine PING iron has a coloured dot on the hosel for custom lie angle fit — fakes often omit the dot entirely or use the wrong colour in the wrong position",
