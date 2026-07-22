@@ -232,6 +232,16 @@
     ],
     "authenticityNotes": "Titleist irons (T100, AP2, CB, MB, 716/718/620) are heavily counterfeited. The ferrule length and security label position are the two quickest checks. Genuine forged irons have a distinctive soft, dampened feel at impact that cast counterfeits cannot replicate."
   },
+  "23615": {
+    "fakeIndicators": [
+      "Every genuine PING iron has a coloured dot on the hosel for custom lie angle fit — fakes often omit the dot entirely or use the wrong colour in the wrong position",
+      "The Cushin sound-dampening insert is visible as a distinct inlay on the back of the face in genuine PING irons — its absence produces noticeably harder feel and sound at impact",
+      "PING uses a distinctive proprietary typeface — fakes substitute a generic sans-serif with subtly different stroke weight and letter spacing",
+      "Head weight must progress consistently 7-8g from long to short iron — fakes show inconsistent, illogical weight distribution",
+      "Serial on each iron's hosel — PING customer service will verify any serial number"
+    ],
+    "authenticityNotes": "PING irons (i-series, Blueprint, G-series) are counterfeited. The coloured lie-angle dot is one of the clearest tells — it is unique to PING and fakes rarely replicate it correctly. PING verify serials via their customer service team at ping.com."
+  },
   "24405": {
     "fakeIndicators": [
       "Between loft and bounce numbers on genuine Vokey there is a DOT separator — counterfeits use a DASH; fastest single visual check",
