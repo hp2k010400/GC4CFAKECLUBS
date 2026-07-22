@@ -93,6 +93,16 @@
     ],
     "authenticityNotes": "PING irons (i-series, Blueprint, G-series) are counterfeited. The coloured lie-angle dot is one of the clearest tells — it is unique to PING and fakes rarely replicate it correctly. PING verify serials via their customer service team at ping.com."
   },
+  "19551": {
+    "fakeIndicators": [
+      "Every genuine PING iron has a coloured dot on the hosel for custom lie angle fit — fakes often omit the dot entirely or use the wrong colour in the wrong position",
+      "The Cushin sound-dampening insert is visible as a distinct inlay on the back of the face in genuine PING irons — its absence produces noticeably harder feel and sound at impact",
+      "PING uses a distinctive proprietary typeface — fakes substitute a generic sans-serif with subtly different stroke weight and letter spacing",
+      "Head weight must progress consistently 7-8g from long to short iron — fakes show inconsistent, illogical weight distribution",
+      "Serial on each iron's hosel — PING customer service will verify any serial number"
+    ],
+    "authenticityNotes": "PING irons (i-series, Blueprint, G-series) are counterfeited. The coloured lie-angle dot is one of the clearest tells — it is unique to PING and fakes rarely replicate it correctly. PING verify serials via their customer service team at ping.com."
+  },
   "19779": {
     "fakeIndicators": [
       "Ferrule (plastic collar between shaft and hosel) is noticeably longer on genuine Titleist irons than on counterfeits — this is consistent across the whole set and one of the quickest visual checks",
