@@ -113,6 +113,16 @@
     ],
     "authenticityNotes": "PING irons (i-series, Blueprint, G-series) are counterfeited. The coloured lie-angle dot is one of the clearest tells — it is unique to PING and fakes rarely replicate it correctly. PING verify serials via their customer service team at ping.com."
   },
+  "19227": {
+    "fakeIndicators": [
+      "SOLE OF THE HEAD - On the counterfeit, the middle weights will require an allen key to remove them, The writing on the sole will also be thinner on the counterfeits",
+      "FACE - Real L.A.B putters will have 18 grooves, Counterfeits usually have 17",
+      "WEIGHTS - If they come out and show the number on the bottom (8G For Example) This is real",
+      "GRIP - Black ring that goes around the base of the grip is usually squint and does not sit flush with the main body of the grip",
+      "HEADCOVERS - May be smaller and different material, \"L.A.B GOLF\" will most likely be much bigger"
+    ],
+    "authenticityNotes": ""
+  },
   "19551": {
     "fakeIndicators": [
       "Every genuine PING iron has a coloured dot on the hosel for custom lie angle fit — fakes often omit the dot entirely or use the wrong colour in the wrong position",
