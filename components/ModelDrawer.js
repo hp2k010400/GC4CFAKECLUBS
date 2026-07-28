@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 export default function ModelDrawer({ model, onClose }) {
   const [copied, setCopied] = useState(false)
+  const [lightbox, setLightbox] = useState(null)
 
   const copyId = () => {
     navigator.clipboard.writeText(String(model.id))
@@ -97,7 +98,8 @@ export default function ModelDrawer({ model, onClose }) {
                               <img
                                 src={comp.realUrl}
                                 alt={`Real — ${comp.caption}`}
-                                className="w-full rounded-xl object-cover aspect-square bg-white shadow-sm"
+                                className="w-full rounded-xl object-cover aspect-square bg-white shadow-sm cursor-zoom-in hover:opacity-90 transition-opacity"
+                                onClick={() => setLightbox(comp.realUrl)}
                                 onError={e => { e.currentTarget.style.display = 'none' }}
                               />
                               <p className="text-xs font-bold text-center mt-2 uppercase tracking-wider" style={{ color: '#005F2C' }}>
@@ -110,7 +112,8 @@ export default function ModelDrawer({ model, onClose }) {
                               <img
                                 src={comp.fakeUrl}
                                 alt={`Counterfeit — ${comp.caption}`}
-                                className="w-full rounded-xl object-cover aspect-square bg-white shadow-sm"
+                                className="w-full rounded-xl object-cover aspect-square bg-white shadow-sm cursor-zoom-in hover:opacity-90 transition-opacity"
+                                onClick={() => setLightbox(comp.fakeUrl)}
                                 onError={e => { e.currentTarget.style.display = 'none' }}
                               />
                               <p className="text-xs font-bold text-center mt-2 uppercase tracking-wider text-red-500">
@@ -125,7 +128,7 @@ export default function ModelDrawer({ model, onClose }) {
                 </section>
               ) : (
                 /* No photos — show club image as hero instead */
-                <div className="bg-slate-50 rounded-2xl flex items-center justify-center" style={{ minHeight: '220px' }}>
+                <div className="bg-slate-50 rounded-2xl flex items-center justify-center cursor-zoom-in hover:opacity-90 transition-opacity" style={{ minHeight: '220px' }} onClick={() => model.imageUrl && setLightbox(model.imageUrl)}>
                   <img
                     src={model.imageUrl || '/placeholder.svg'}
                     alt={model.name}
@@ -189,6 +192,27 @@ export default function ModelDrawer({ model, onClose }) {
           </div>
         </div>
       </div>
+      {lightbox && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4 cursor-zoom-out"
+          onClick={() => setLightbox(null)}
+        >
+          <img
+            src={lightbox}
+            alt="Full size"
+            className="max-w-full max-h-full rounded-xl shadow-2xl object-contain"
+            onClick={e => e.stopPropagation()}
+          />
+          <button
+            onClick={() => setLightbox(null)}
+            className="absolute top-4 right-4 w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      )}
     </>
   )
 }
