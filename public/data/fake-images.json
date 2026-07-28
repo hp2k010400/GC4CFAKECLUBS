@@ -188,6 +188,28 @@
       "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784700908/j9if56ysc7coy8wnug9u.webp"
     }
   ],
+  "17490": [
+    {
+      "caption": "Width of sole and font on bottom is wrong",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785245827/suhohyocja1fnevaftpo.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785245839/lsknwtmsdhp3wakfsroo.jpg"
+    },
+    {
+      "caption": "Material of head looks off and paint infill is untidy",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785246054/vsowmghwzgbb4hmcwa6j.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785246074/ot0wt9oufrs9d8nqfugh.jpg"
+    },
+    {
+      "caption": "Milling on face is too deep and feels sharp",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785246116/uaaoj7sikayhhvrwsqcr.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785246125/v2hkdcqbmmy1xpi5m3wz.jpg"
+    },
+    {
+      "caption": "Width of top line is too thick and shape of head is wrong",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785246205/aghk37ader15elbfu1o4.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785246214/ordi10ymz1uanhlblmgw.jpg"
+    }
+  ],
   "18444": [
     {
       "caption": "The color of the letters \"\"FACE WRAP\"\" on the sole is different. The fake has a brownish colour.  ",
