@@ -302,6 +302,16 @@
     ],
     "authenticityNotes": "PING operates a tightly controlled distribution network. Counterfeits primarily target G-series drivers. PING customer service will authenticate any club by serial number at ping.com."
   },
+  "21410": {
+    "fakeIndicators": [
+      "XXIO drivers are exceptionally lightweight — genuine MP-1100 series shafts weigh under 45g; a noticeably heavier shaft confirms a generic blank installed in a fake",
+      "The XXIO wordmark uses a specific modern typeface with precise proportions — counterfeits reproduce it with subtly different letter proportions or inter-character spacing",
+      "The premium badged Miyazaki or XXIO custom shaft on genuine models has specific branding near the tip — fakes use generic graphite with copied label stickers",
+      "XXIO packaging is distinctively refined with Japanese text and high-quality printing — counterfeit boxes use lower-weight paper with incorrectly formatted or missing Japanese characters",
+      "XXIO is distributed exclusively through authorised Japanese and premium international retailers — deeply discounted new XXIO from unknown sellers is almost certainly fake"
+    ],
+    "authenticityNotes": "XXIO is a premium Japanese brand from Dunlop Sports. The ultralight construction is the clearest identifier — genuine XXIO drivers feel noticeably lighter than almost any other brand. Purchase through authorised XXIO retailers only."
+  },
   "21531": {
     "fakeIndicators": [
       "Sole printing on G-series drivers should be gray-toned — fakes display a slightly brownish or yellowed tint that is obvious in direct comparison",
