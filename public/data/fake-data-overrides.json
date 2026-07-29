@@ -292,6 +292,16 @@
     ],
     "authenticityNotes": "TaylorMade irons (P-series, SIM, Qi) are regularly counterfeited. The P790 is particularly widely faked due to its hollow construction and high value. The chrome finish on genuine clubs is more uniform and refined than on counterfeits. Verify serial numbers via TaylorMade customer service."
   },
+  "22288": {
+    "fakeIndicators": [
+      "Serial on each iron's hosel must follow TM + 2-digit year + I + 7 digits, laser-etched — fakes have wrong format, too few characters, or shallowly scratched serials",
+      "Chrome or satin finish should be perfectly consistent across the entire set — fakes have patchy plating, inconsistent sheen, or visible casting seams on the sole",
+      "Head weight must progress consistently 7-8g heavier from long iron to short iron — fakes show inconsistent, illogical weight distribution across the set",
+      "Ferrule (plastic collar between shaft and hosel) should match the genuine specified length — fakes use shorter, generic ferrules throughout the set",
+      "Cavity engraving and sole markings (loft, model name) should be laser-etched with crisp edges — fakes show blurred, shallow, or bleeding characters"
+    ],
+    "authenticityNotes": "TaylorMade irons (P-series, SIM, Qi) are regularly counterfeited. The P790 is particularly widely faked due to its hollow construction and high value. The chrome finish on genuine clubs is more uniform and refined than on counterfeits. Verify serial numbers via TaylorMade customer service."
+  },
   "22367": {
     "fakeIndicators": [
       "Serial on each iron's hosel must follow TM + 2-digit year + I + 7 digits, laser-etched — fakes have wrong format, too few characters, or shallowly scratched serials",
