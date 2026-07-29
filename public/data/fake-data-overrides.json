@@ -332,6 +332,16 @@
     ],
     "authenticityNotes": "TaylorMade irons (P-series, SIM, Qi) are regularly counterfeited. The P790 is particularly widely faked due to its hollow construction and high value. The chrome finish on genuine clubs is more uniform and refined than on counterfeits. Verify serial numbers via TaylorMade customer service."
   },
+  "22496": {
+    "fakeIndicators": [
+      "Serial on hosel laser-etched in TM format — fakes have wrong format, shallow scratching, or no serial at all",
+      "Groove quality is critical: genuine TaylorMade Milled Grind wedges have precisely machined grooves with sharp, uniform edges — fakes have cast grooves that are visibly less defined",
+      "The sole finish (raw, chrome, or satin depending on model) should be completely consistent with no patchy or shinier areas — fakes have uneven plating",
+      "Milled face models show fine, consistent milling marks across the entire face — fakes have a smoother, cast-quality face without milling texture",
+      "Shaft band should be perfectly aligned and firmly adhered — counterfeit shaft bands are frequently crooked and begin peeling at the edges"
+    ],
+    "authenticityNotes": "TaylorMade Milled Grind wedges are faked, though less frequently than drivers. Groove precision is the most important check — genuine machined grooves spin noticeably more than cast fake grooves. Verify serial via TaylorMade customer service."
+  },
   "22628": {
     "fakeIndicators": [
       "Serial on each iron's hosel, uniformly stamped — crooked, faint, or absent serials are a red flag; Callaway verify any serial via customer service",
