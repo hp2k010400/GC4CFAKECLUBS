@@ -188,6 +188,23 @@
       "fakeUrl": ""
     }
   ],
+  "9837": [
+    {
+      "caption": "The front and back of the \"MP-64\" stamp on the counterfeit is wide",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785323397/xovjbck8efdsfqkvhxmf.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785323408/suptgzec2axqttffxowp.webp"
+    },
+    {
+      "caption": "The counterfeit has a thick “MIZUNO” stamp",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785323440/v0pbif86lzuws2rqf4dh.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785323445/hxblug0agm1e36gitb3w.webp"
+    },
+    {
+      "caption": "The font of the count is different.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785323495/xgtq6uu2ukhzo0emtmi9.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785323501/oeumo1wwkogdiawkyagx.webp"
+    }
+  ],
   "13137": [
     {
       "caption": "Head - 'SPEED BRIDGE' Font is bigger and words stand out more, The black infill does not come on real clubs",
