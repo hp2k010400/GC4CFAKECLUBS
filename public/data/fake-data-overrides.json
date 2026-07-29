@@ -133,6 +133,16 @@
     ],
     "authenticityNotes": "Titleist irons (T100, AP2, CB, MB, 716/718/620) are heavily counterfeited. The ferrule length and security label position are the two quickest checks. Genuine forged irons have a distinctive soft, dampened feel at impact that cast counterfeits cannot replicate."
   },
+  "16976": {
+    "fakeIndicators": [
+      "Between loft and bounce numbers on genuine Vokey there is a DOT separator — counterfeits use a DASH; fastest single visual check",
+      "Genuine SM-series Vokey have a satin chrome finish that is consistently matte — fakes are shinier or have patchy plating",
+      "The BV initials on genuine Vokey are in a slightly heavier bold typeface — on fakes they appear thinner",
+      "Groove precision: genuine Vokey grooves machined to USGA-maximum tolerances with crisp sharp edges — fakes are cast and less defined",
+      "Titleist holographic security label on underside of shaft near grip — fakes place it on top"
+    ],
+    "authenticityNotes": "Vokey wedges are widely faked. The dot-vs-dash between loft and bounce is the fastest check. Verify via Team Titleist."
+  },
   "17472": {
     "fakeIndicators": [
       "The shaft label must be on the BACK of the shaft (facing away at address) — if it is on the front, the putter is counterfeit",
