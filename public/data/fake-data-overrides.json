@@ -163,6 +163,16 @@
     ],
     "authenticityNotes": "Vokey wedges are widely faked. The dot-vs-dash between loft and bounce is the fastest check. Verify via Team Titleist."
   },
+  "17458": {
+    "fakeIndicators": [
+      "The shaft label must be on the BACK of the shaft (facing away at address) — if it is on the front, the putter is counterfeit",
+      "Genuine putters have a 7-digit serial number precisely laser-etched on the shaft near the top, verifiable at scottycameron.com/authentication — missing, poorly etched, or wrongly formatted serials indicate a fake",
+      "Face milling is CNC-machined to exact tolerances, producing a tight and perfectly consistent pattern — fake milling looks rougher, less uniform, or appears cast rather than machined",
+      "Paint fill uses translucent, bright pigments that allow the underlying metal to show through slightly — fakes use opaque, flat paint with noticeably bolder, oversized cavity fonts",
+      "Genuine Scotty Cameron putters are made in the USA and never arrive with cheap plastic wrap on the head — any putter shipping from China or with Made in China markings is counterfeit"
+    ],
+    "authenticityNotes": "Scotty Cameron putters are among the most counterfeited golf items in the world. The Authentication Registry at scottycameron.com allows verification by 7-digit serial number. A genuine Newport 2 weighs approximately 355g; zinc-alloy fakes typically measure 320-340g."
+  },
   "17472": {
     "fakeIndicators": [
       "The shaft label must be on the BACK of the shaft (facing away at address) — if it is on the front, the putter is counterfeit",
@@ -639,6 +649,16 @@
       "HEADCOVERS - May be smaller and different material, \"L.A.B GOLF\" will most likely be much bigger"
     ],
     "authenticityNotes": ""
+  },
+  "24978": {
+    "fakeIndicators": [
+      "Hold a magnet to the clubhead — genuine titanium heads will not attract a magnet; most counterfeits use cheaper ferrous metal that sticks",
+      "Serial number stamped uniformly on the hosel with consistent digit height — crooked, faint, or absent serials are a red flag; Callaway verify any serial via customer service",
+      "The Callaway chevron logo should be crisp with precisely consistent stroke weight — fakes show slightly thicker strokes, off-centre placement, or a subtly different shade",
+      "Finish quality should be uniform with no visible casting seams, mould lines, or rough edges — fakes have noticeably lower build quality",
+      "Stock shaft (Aldila, Mitsubishi, Project X) carries the manufacturer's own serial near the tip — fakes use plain, unbranded graphite blanks"
+    ],
+    "authenticityNotes": "Callaway maintain a counterfeit warning page at callawaygolf.com/help/counterfeit-warning and will verify clubs by serial number. On modern carbon crown models (Epic, Rogue, Paradym series): tap the crown with a fingernail — genuine carbon produces a dull soft thud, not a metallic ring."
   },
   "24996": {
     "fakeIndicators": [
