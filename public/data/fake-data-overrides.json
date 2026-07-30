@@ -173,6 +173,16 @@
     ],
     "authenticityNotes": "Scotty Cameron putters are among the most counterfeited golf items in the world. The Authentication Registry at scottycameron.com allows verification by 7-digit serial number. A genuine Newport 2 weighs approximately 355g; zinc-alloy fakes typically measure 320-340g."
   },
+  "17460": {
+    "fakeIndicators": [
+      "The shaft label must be on the BACK of the shaft (facing away at address) — if it is on the front, the putter is counterfeit",
+      "Genuine putters have a 7-digit serial number precisely laser-etched on the shaft near the top, verifiable at scottycameron.com/authentication — missing, poorly etched, or wrongly formatted serials indicate a fake",
+      "Face milling is CNC-machined to exact tolerances, producing a tight and perfectly consistent pattern — fake milling looks rougher, less uniform, or appears cast rather than machined",
+      "Paint fill uses translucent, bright pigments that allow the underlying metal to show through slightly — fakes use opaque, flat paint with noticeably bolder, oversized cavity fonts",
+      "Genuine Scotty Cameron putters are made in the USA and never arrive with cheap plastic wrap on the head — any putter shipping from China or with Made in China markings is counterfeit"
+    ],
+    "authenticityNotes": "Scotty Cameron putters are among the most counterfeited golf items in the world. The Authentication Registry at scottycameron.com allows verification by 7-digit serial number. A genuine Newport 2 weighs approximately 355g; zinc-alloy fakes typically measure 320-340g."
+  },
   "17472": {
     "fakeIndicators": [
       "The shaft label must be on the BACK of the shaft (facing away at address) — if it is on the front, the putter is counterfeit",
