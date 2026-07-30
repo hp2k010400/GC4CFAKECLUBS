@@ -239,14 +239,21 @@ export default function ModelLibrary() {
   useEffect(() => {
     Promise.all([
       fetch('/data/models.json').then(r => r.json()),
+      fetch('/data/models-custom.json').then(r => r.json()).catch(() => []),
       fetch('/data/fake-data.json').then(r => r.json()).catch(() => ({})),
       fetch('/data/fake-data-overrides.json').then(r => r.json()).catch(() => ({})),
       fetch('/data/fake-images.json').then(r => r.json()).catch(() => ({})),
-    ]).then(([data, fakeData, overrides, fakeImages]) => {
-      const merged = data.map(m => {
+    ]).then(([data, customData, fakeData, overrides, fakeImages]) => {
+      const allModels = [...data, ...customData]
+      const merged = allModels.map(m => {
         const fd = overrides[m.id] || fakeData[m.id]
         const fi = fakeImages[String(m.id)] || []
-        return { ...m, fakeIndicators: fd?.fakeIndicators || [], authenticityNotes: fd?.authenticityNotes || '', fakeImages: fi }
+        return {
+          ...m,
+          fakeIndicators: fd?.fakeIndicators ?? m.fakeIndicators ?? [],
+          authenticityNotes: fd?.authenticityNotes ?? m.authenticityNotes ?? '',
+          fakeImages: fi,
+        }
       })
       setModels(merged)
       setLoading(false)

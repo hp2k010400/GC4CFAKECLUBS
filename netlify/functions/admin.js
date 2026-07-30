@@ -25,6 +25,44 @@ function request(url, options = {}, body = null) {
   })
 }
 
+async function appendToCustomModels(pat, newModel) {
+  const repo = 'hp2k010400/GC4CFAKECLUBS'
+  const filePath = 'public/data/models-custom.json'
+  const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`
+  const ghHeaders = {
+    Authorization: `Bearer ${pat}`,
+    Accept: 'application/vnd.github+json',
+    'X-GitHub-Api-Version': '2022-11-28',
+    'User-Agent': 'gc4c-fake-guide',
+  }
+
+  const getRes = await request(apiUrl, { headers: ghHeaders })
+  if (!getRes.ok) throw new Error(`Failed to read file: ${getRes.status}`)
+
+  const fileData = getRes.json()
+  const sha = fileData.sha
+  const arr = JSON.parse(Buffer.from(fileData.content, 'base64').toString('utf8'))
+
+  const newId = Date.now()
+  const modelWithId = { ...newModel, id: newId }
+  arr.push(modelWithId)
+
+  const encoded = Buffer.from(JSON.stringify(arr, null, 2)).toString('base64')
+  const putBody = JSON.stringify({
+    message: `Add model: ${newModel.name}`,
+    content: encoded,
+    sha,
+  })
+
+  const putRes = await request(apiUrl, {
+    method: 'PUT',
+    headers: { ...ghHeaders, 'Content-Type': 'application/json' },
+  }, putBody)
+
+  if (!putRes.ok) throw new Error(`GitHub write error: ${putRes.text()}`)
+  return newId
+}
+
 async function mergeAndCommit(pat, filePath, updates) {
   const repo = 'hp2k010400/GC4CFAKECLUBS'
   const apiUrl = `https://api.github.com/repos/${repo}/contents/${filePath}`
@@ -84,6 +122,23 @@ exports.handler = async (event) => {
   }
 
   const { action, updates } = body
+
+  if (action === 'add-model') {
+    const pat = process.env.GITHUB_PAT
+    if (!pat) {
+      return { statusCode: 500, headers, body: JSON.stringify({ error: 'GITHUB_PAT env var missing' }) }
+    }
+    const { model } = body
+    if (!model?.brand || !model?.name || !model?.productType) {
+      return { statusCode: 400, headers, body: JSON.stringify({ error: 'Missing required fields: brand, name, productType' }) }
+    }
+    try {
+      const newId = await appendToCustomModels(pat, model)
+      return { statusCode: 200, headers, body: JSON.stringify({ success: true, id: newId }) }
+    } catch (err) {
+      return { statusCode: 500, headers, body: JSON.stringify({ error: err.message }) }
+    }
+  }
 
   if (action === 'commit' || action === 'commit-images') {
     const pat = process.env.GITHUB_PAT

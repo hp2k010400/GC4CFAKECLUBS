@@ -119,6 +119,86 @@ export default function AdminPage() {
     comparisons: [],
   })
 
+  const PRODUCT_TYPES = ['Putter', 'Driver', 'Irons', 'Wedge', 'Fairway Wood', 'Hybrid', 'Individual Iron', 'Wood']
+  const KNOWN_BRANDS = [
+    'Scotty Cameron', 'Taylormade', 'Callaway', 'Titleist', 'Ping', 'PXG',
+    'Cleveland', 'Cobra', 'Honma', 'XXIO', 'Odyssey', 'Mizuno', 'Srixon',
+    'Miura', 'Nike', 'Wilson', 'Bettinardi', 'Toulon', 'Evnroll',
+  ]
+
+  const emptyAddForm = {
+    brand: '', name: '', model: '', productType: 'Putter',
+    year: new Date().getFullYear(), hand: 'Right-Handed', gender: 'Mens',
+    shaftMaterial: '', loft: '', imageUrl: '',
+    fakeIndicators: ['', '', '', '', ''],
+    authenticityNotes: '',
+  }
+  const [addForm, setAddForm] = useState(emptyAddForm)
+  const [addImageUploading, setAddImageUploading] = useState(false)
+  const [addPublishing, setAddPublishing] = useState(false)
+  const [addStatus, setAddStatus] = useState(null)
+  const [addMsg, setAddMsg] = useState('')
+
+  const setAdd = (field, value) => setAddForm(f => ({ ...f, [field]: value }))
+
+  const handleAddImage = async (file) => {
+    setAddImageUploading(true)
+    try {
+      const url = await uploadToCloudinary(file)
+      setAdd('imageUrl', url)
+    } catch {
+      alert('Upload failed — please try again')
+    } finally {
+      setAddImageUploading(false)
+    }
+  }
+
+  const submitAddModel = async () => {
+    if (!addForm.brand.trim() || !addForm.name.trim() || !addForm.productType) {
+      setAddStatus('error')
+      setAddMsg('Brand, Name and Product Type are required')
+      return
+    }
+    setAddPublishing(true)
+    setAddStatus(null)
+    const indicators = addForm.fakeIndicators.map(s => s.trim()).filter(Boolean)
+    const model = {
+      name: addForm.name.trim(),
+      model: addForm.model.trim() || addForm.name.trim(),
+      brand: addForm.brand.trim(),
+      year: addForm.year ? parseInt(addForm.year) : null,
+      productType: addForm.productType,
+      hand: addForm.hand || '',
+      gender: addForm.gender || '',
+      shaftMaterial: addForm.shaftMaterial || '',
+      loft: addForm.loft || '',
+      description: addForm.name.trim(),
+      imageUrl: addForm.imageUrl || '',
+      brandLogoUrl: '',
+      fakeIndicators: indicators,
+      authenticityNotes: addForm.authenticityNotes.trim(),
+      serialNumberFormat: '',
+    }
+    try {
+      const res = await fetch(NETLIFY_FN, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'add-model', model }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.success) throw new Error(data.error || 'Failed to add model')
+      setModels(prev => [...prev, { ...model, id: data.id, fakeImages: [] }])
+      setAddStatus('success')
+      setAddMsg(`Model added! ID: ${data.id} — site will redeploy in ~60 seconds.`)
+      setAddForm(emptyAddForm)
+    } catch (err) {
+      setAddStatus('error')
+      setAddMsg(err.message)
+    } finally {
+      setAddPublishing(false)
+    }
+  }
+
   const [csvText, setCsvText] = useState('')
   const [csvParsed, setCsvParsed] = useState([])
   const [csvError, setCsvError] = useState('')
@@ -365,7 +445,7 @@ export default function AdminPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
         <div className="flex gap-1 mb-6 bg-slate-100 rounded-lg p-1 w-fit">
-          {[['edit', 'Browse & Edit'], ['import', 'Bulk CSV Import']].map(([key, label]) => (
+          {[['edit', 'Browse & Edit'], ['import', 'Bulk CSV Import'], ['add', '+ Add Model']].map(([key, label]) => (
             <button
               key={key}
               onClick={() => setTab(key)}
@@ -569,6 +649,187 @@ export default function AdminPage() {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {tab === 'add' && (
+          <div className="max-w-2xl space-y-5">
+            {addStatus && (
+              <div className={`px-4 py-3 rounded-xl text-sm font-medium flex items-center justify-between ${
+                addStatus === 'success'
+                  ? 'bg-green-50 text-green-800 border border-green-200'
+                  : 'bg-red-50 text-red-800 border border-red-200'
+              }`}>
+                <span>{addMsg}</span>
+                <button onClick={() => setAddStatus(null)} className="underline text-xs ml-4">Dismiss</button>
+              </div>
+            )}
+
+            <div className="bg-white rounded-xl border border-slate-200 p-6 space-y-4">
+              <h2 className="text-base font-semibold text-slate-900">Add New Model</h2>
+
+              {/* Brand + Product Type */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Brand <span className="text-red-400">*</span></label>
+                  <input
+                    list="brand-list"
+                    value={addForm.brand}
+                    onChange={e => setAdd('brand', e.target.value)}
+                    placeholder="e.g. Scotty Cameron"
+                    className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
+                  />
+                  <datalist id="brand-list">
+                    {KNOWN_BRANDS.map(b => <option key={b} value={b} />)}
+                  </datalist>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Product Type <span className="text-red-400">*</span></label>
+                  <select
+                    value={addForm.productType}
+                    onChange={e => setAdd('productType', e.target.value)}
+                    className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
+                  >
+                    {PRODUCT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+                  </select>
+                </div>
+              </div>
+
+              {/* Full Name */}
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-1">Full Model Name <span className="text-red-400">*</span></label>
+                <input
+                  type="text"
+                  value={addForm.name}
+                  onChange={e => setAdd('name', e.target.value)}
+                  placeholder="e.g. Scotty Cameron Newport 2 Putter"
+                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
+                />
+              </div>
+
+              {/* Short Model + Year */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Short Model Name</label>
+                  <input
+                    type="text"
+                    value={addForm.model}
+                    onChange={e => setAdd('model', e.target.value)}
+                    placeholder="e.g. Newport 2"
+                    className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Year</label>
+                  <input
+                    type="number"
+                    value={addForm.year}
+                    onChange={e => setAdd('year', e.target.value)}
+                    min={1980}
+                    max={2030}
+                    className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
+                  />
+                </div>
+              </div>
+
+              {/* Hand + Gender + Shaft */}
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Hand</label>
+                  <select value={addForm.hand} onChange={e => setAdd('hand', e.target.value)} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]">
+                    <option>Right-Handed</option>
+                    <option>Left-Handed</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Gender</label>
+                  <select value={addForm.gender} onChange={e => setAdd('gender', e.target.value)} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]">
+                    <option>Mens</option>
+                    <option>Ladies</option>
+                    <option>Unisex</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-1">Shaft</label>
+                  <select value={addForm.shaftMaterial} onChange={e => setAdd('shaftMaterial', e.target.value)} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]">
+                    <option value="">—</option>
+                    <option>Graphite</option>
+                    <option>Steel</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Image */}
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-1">Club Image</label>
+                {addForm.imageUrl ? (
+                  <div className="flex items-center gap-3">
+                    <img src={addForm.imageUrl} alt="preview" className="w-16 h-16 object-contain rounded-lg border border-slate-200 bg-slate-50" />
+                    <button type="button" onClick={() => setAdd('imageUrl', '')} className="text-xs text-red-400 hover:text-red-600 font-medium">Remove</button>
+                  </div>
+                ) : (
+                  <div className="flex gap-3 items-start">
+                    <label className={`cursor-pointer px-4 py-2 rounded-lg border border-slate-300 text-sm text-slate-600 hover:bg-slate-50 transition-colors ${addImageUploading ? 'opacity-50 pointer-events-none' : ''}`}>
+                      {addImageUploading ? 'Uploading…' : 'Upload photo'}
+                      <input type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files[0]; if (f) handleAddImage(f); e.target.value = '' }} />
+                    </label>
+                    <span className="text-slate-400 text-sm pt-2">or</span>
+                    <input
+                      type="url"
+                      value={addForm.imageUrl}
+                      onChange={e => setAdd('imageUrl', e.target.value)}
+                      placeholder="Paste image URL"
+                      className="flex-1 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
+                    />
+                  </div>
+                )}
+              </div>
+
+              {/* Fake Indicators */}
+              <div className="border-t border-slate-100 pt-4">
+                <label className="block text-sm font-semibold text-slate-700 mb-2">Fake Indicators <span className="text-slate-400 font-normal">(optional — add now or later via Browse & Edit)</span></label>
+                <div className="space-y-2">
+                  {addForm.fakeIndicators.map((ind, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <span className="text-xs text-slate-400 w-4 text-right">{i + 1}.</span>
+                      <input
+                        type="text"
+                        value={ind}
+                        onChange={e => {
+                          const next = [...addForm.fakeIndicators]
+                          next[i] = e.target.value
+                          setAdd('fakeIndicators', next)
+                        }}
+                        placeholder={`Indicator ${i + 1}`}
+                        className="flex-1 border border-slate-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C]"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Authenticity Notes */}
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-1">Authenticity Notes</label>
+                <textarea
+                  value={addForm.authenticityNotes}
+                  onChange={e => setAdd('authenticityNotes', e.target.value)}
+                  rows={3}
+                  placeholder="Any general notes about spotting fakes of this model…"
+                  className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#005F2C] resize-none"
+                />
+              </div>
+
+              <button
+                onClick={submitAddModel}
+                disabled={addPublishing}
+                className="w-full py-3 rounded-lg text-white text-sm font-semibold hover:opacity-90 transition-opacity disabled:opacity-40"
+                style={{ backgroundColor: '#005F2C' }}
+              >
+                {addPublishing ? 'Adding to Library…' : 'Add to Library'}
+              </button>
+              <p className="text-xs text-slate-400 text-center">Publishes immediately — the main site will update within ~60 seconds.</p>
             </div>
           </div>
         )}
