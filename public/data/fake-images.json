@@ -312,6 +312,28 @@
       "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785322545/eladnjpdevey1lgy5vwf.jpg"
     }
   ],
+  "17458": [
+    {
+      "caption": "Overall, the font on a fake is thicker.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785397267/gg6kfgnjvs3psz87ndlb.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785397271/ysiswfdlwucjaklwd9wj.webp"
+    },
+    {
+      "caption": "The \"SCOTTY CAMERON\" engraving is wider for a fake",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785397302/yu4o9tc3eouh4q04wgt5.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785397306/kcbmnblb0lk5670y87ts.webp"
+    },
+    {
+      "caption": "",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785397343/s8gjftccuwsg8xckn0n6.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785397349/nj9sowt9f7sc3bvayna7.webp"
+    },
+    {
+      "caption": "The distance between the dot and edge of the grip are different.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785397379/pv2119qvwcbmskepcwy1.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785397383/cu5vi6lipa81gsaf5kvf.webp"
+    }
+  ],
   "17472": [
     {
       "caption": "The quality of the milling and texture are noticeably different.",
@@ -1241,6 +1263,33 @@
       "caption": "WEIGHTS - If they come out and show the number on the bottom (8G For Example) This is real",
       "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784714000/afmem6zdagudzzytodrs.png",
       "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784714005/tbpqu1v9omtp8moil85f.png"
+    }
+  ],
+  "24978": [
+    {
+      "caption": "The counterfeit item has brighter line colors.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785395966/gipkek90tltmxchv6zs8.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785395970/dgqoixh5gxbszmu4bip7.webp"
+    },
+    {
+      "caption": "The counterfeit has the word \"DRAW\" printed right at the edge.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785396021/ikr32ilekfyaaykogoui.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785396025/j89xgsluhdfy307q7kvg.webp"
+    },
+    {
+      "caption": "The shape of the adjustable part differs significantly between the fake and authentic club.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785396081/hgbzvph8phn3iiypftoh.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785396088/du0xoxf3taa7xr6nhtcn.webp"
+    },
+    {
+      "caption": "The carbon part is just a print, and the area that should be made of carbon is actually made of metal.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785396476/l02znv1xiwb14yplwf0l.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785396480/gflkbbmpxdpp0wp99cav.webp"
+    },
+    {
+      "caption": "The number of thin lines on the bottom right of the face differs: the genuine item has 3, while the fake has 2.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785396517/b2f6bvbd447k0d9gwphx.webp",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785396522/ccs3vfobn98vyhil1guw.webp"
     }
   ],
   "24996": [
