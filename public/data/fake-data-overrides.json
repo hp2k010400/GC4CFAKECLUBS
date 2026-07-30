@@ -73,6 +73,16 @@
     ],
     "authenticityNotes": "Callaway maintain a counterfeit warning page at callawaygolf.com/help/counterfeit-warning and will verify clubs by serial number. On modern carbon crown models (Epic, Rogue, Paradym series): tap the crown with a fingernail — genuine carbon produces a dull soft thud, not a metallic ring."
   },
+  "2714": {
+    "fakeIndicators": [
+      "The Rogue ST uses a Jailbreak Speed Frame — genuine clubs have two visible internal pillars through the face aperture with a light source; fakes omit this structure",
+      "Carbon crown tap test: genuine produces a dull soft sound; fake metal rings metallic",
+      "Magnet test on the clubhead — genuine titanium/carbon does not attract a magnet",
+      "Serial on hosel uniformly stamped — verify via Callaway customer service",
+      "Stock Aldila Rogue shaft has manufacturer's own serial/logo near tip"
+    ],
+    "authenticityNotes": "Callaway maintain a counterfeit warning page at callawaygolf.com/help/counterfeit-warning and will verify clubs by serial number. On modern carbon crown models (Epic, Rogue, Paradym series): tap the crown with a fingernail — genuine carbon produces a dull soft thud, not a metallic ring."
+  },
   "3035": {
     "fakeIndicators": [
       "Sole printing on G-series drivers should be gray-toned — fakes display a slightly brownish or yellowed tint that is obvious in direct comparison",
