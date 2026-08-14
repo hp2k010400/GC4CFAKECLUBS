@@ -35,7 +35,6 @@ export default function Header() {
         </Link>
         <nav className="flex items-center gap-1">
           {navLink('/', 'Library')}
-          {navLink('/admin', 'Admin')}
         </nav>
       </div>
     </header>
