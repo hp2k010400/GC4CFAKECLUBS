@@ -23,6 +23,16 @@
     ],
     "authenticityNotes": "TaylorMade drivers are among the most counterfeited clubs in the world. TaylorMade offer authenticity checks via taylormadegolf.com — contact support with the serial number to verify. On modern carbon face models (Stealth, Qi series), tapping the face with a fingernail should produce a dull soft thud, not a metallic ring."
   },
+  "1598": {
+    "fakeIndicators": [
+      "Hold a magnet to the clubhead — genuine titanium heads will not attract a magnet; most counterfeits use cheaper ferrous metal that sticks",
+      "Serial number stamped uniformly on the hosel with consistent digit height — crooked, faint, or absent serials are a red flag; Callaway verify any serial via customer service",
+      "The Callaway chevron logo should be crisp with precisely consistent stroke weight — fakes show slightly thicker strokes, off-centre placement, or a subtly different shade",
+      "Finish quality should be uniform with no visible casting seams, mould lines, or rough edges — fakes have noticeably lower build quality",
+      "Stock shaft (Aldila, Mitsubishi, Project X) carries the manufacturer's own serial near the tip — fakes use plain, unbranded graphite blanks"
+    ],
+    "authenticityNotes": "Callaway maintain a counterfeit warning page at callawaygolf.com/help/counterfeit-warning and will verify clubs by serial number. On modern carbon crown models (Epic, Rogue, Paradym series): tap the crown with a fingernail — genuine carbon produces a dull soft thud, not a metallic ring."
+  },
   "1616": {
     "fakeIndicators": [
       "Hold a magnet to the clubhead — genuine titanium heads will not attract a magnet; most counterfeits use cheaper ferrous metal that sticks",
