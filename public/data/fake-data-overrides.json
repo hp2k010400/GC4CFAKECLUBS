@@ -622,6 +622,16 @@
     ],
     "authenticityNotes": "PING irons (i-series, Blueprint, G-series) are counterfeited. The coloured lie-angle dot is one of the clearest tells — it is unique to PING and fakes rarely replicate it correctly. PING verify serials via their customer service team at ping.com."
   },
+  "24019": {
+    "fakeIndicators": [
+      "The Grain Flow Forged stamp on genuine Mizuno forged wedge models should be finely etched and precise — fakes reproduce this shallowly or with blurred characters",
+      "Groove quality: genuine Mizuno T-series wedges have precisely machined grooves with sharp, uniform edges — fakes have cast grooves that are visibly less defined",
+      "Satin finish should be completely consistent across the entire head — fakes have patchy plating or noticeably shinier areas",
+      "Inside the hosel: genuine has clear adhesive-aid grooves; fake hosels are smooth",
+      "Serial laser-etched on hosel — verify via Mizuno customer service"
+    ],
+    "authenticityNotes": "Mizuno T-series wedges are occasionally counterfeited. Groove precision and the Grain Flow Forged stamp quality are the key checks. Verify via Mizuno customer service."
+  },
   "24116": {
     "fakeIndicators": [
       "Every genuine PING wedge has a coloured dot on the hosel for lie angle — fakes frequently omit this or use an incorrect colour/position",
