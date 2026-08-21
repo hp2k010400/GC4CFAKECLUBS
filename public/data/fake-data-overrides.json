@@ -123,6 +123,16 @@
     ],
     "authenticityNotes": "Callaway irons across all ranges are counterfeited. Forged models (Apex, Apex Pro) have a distinctively soft, dampened feel at impact that cast counterfeits cannot replicate. Verify serial numbers via Callaway customer service."
   },
+  "6217": {
+    "fakeIndicators": [
+      "Serial on each iron's hosel, uniformly stamped — crooked, faint, or absent serials are a red flag; Callaway verify any serial via customer service",
+      "Ferrule (plastic collar between shaft and hosel) should be consistent in length across the set — fakes use shorter, generic ferrules that are visibly different",
+      "Head weight must progress consistently 7-8g heavier from long iron to short iron — fakes have inconsistent, illogical weight distribution",
+      "Chrome or satin finish should be perfectly uniform across the set with no visible seams, casting lines, or areas of different sheen",
+      "Shaft bands should be perfectly straight and firmly adhered — counterfeit shaft bands are frequently crooked and begin peeling at the edges"
+    ],
+    "authenticityNotes": "Callaway irons across all ranges are counterfeited. Forged models (Apex, Apex Pro) have a distinctively soft, dampened feel at impact that cast counterfeits cannot replicate. Verify serial numbers via Callaway customer service."
+  },
   "9617": {
     "fakeIndicators": [
       "Inside the hosel of genuine Mizuno irons there are distinct adhesive-aid grooves clearly visible with a torch — fake hosels are smooth inside with barely visible or no grooves",
