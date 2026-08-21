@@ -233,6 +233,16 @@
     ],
     "authenticityNotes": "PING irons (i-series, Blueprint, G-series) are counterfeited. The coloured lie-angle dot is one of the clearest tells — it is unique to PING and fakes rarely replicate it correctly. PING verify serials via their customer service team at ping.com."
   },
+  "19212": {
+    "fakeIndicators": [
+      "Serial on each iron's hosel, uniformly stamped — crooked, faint, or absent serials are a red flag; Callaway verify any serial via customer service",
+      "Ferrule (plastic collar between shaft and hosel) should be consistent in length across the set — fakes use shorter, generic ferrules that are visibly different",
+      "Head weight must progress consistently 7-8g heavier from long iron to short iron — fakes have inconsistent, illogical weight distribution",
+      "Chrome or satin finish should be perfectly uniform across the set with no visible seams, casting lines, or areas of different sheen",
+      "Shaft bands should be perfectly straight and firmly adhered — counterfeit shaft bands are frequently crooked and begin peeling at the edges"
+    ],
+    "authenticityNotes": "Callaway irons across all ranges are counterfeited. Forged models (Apex, Apex Pro) have a distinctively soft, dampened feel at impact that cast counterfeits cannot replicate. Verify serial numbers via Callaway customer service."
+  },
   "19227": {
     "fakeIndicators": [
       "SOLE OF THE HEAD - On the counterfeit, the middle weights will require an allen key to remove them, The writing on the sole will also be thinner on the counterfeits",
