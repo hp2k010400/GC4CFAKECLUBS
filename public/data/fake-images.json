@@ -921,6 +921,28 @@
       "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1785322075/tklnpf0qv5md50gm26z0.jpg"
     }
   ],
+  "22621": [
+    {
+      "caption": "Head - Counterfeit club will have a block red back plate rather than slightly darker red and shiny",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1787301467/kdi9ymkixtkkql7vt7y2.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1787301470/gcjfauoy0omijkyrg5t1.jpg"
+    },
+    {
+      "caption": "Face - Grooves are very deep and face is more matte than shiny",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1787301477/zxncbyxcvjgwdaejsd0x.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1787301480/gfyv60xq2kciihlyvc7l.jpg"
+    },
+    {
+      "caption": "Stock Shaft - Font is smaller and thinner, real club will have red at the top of the shaft",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1787301492/a9u9rr0iabb5p4r7pjbs.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1787301494/a0tyeuqfqt65jlog8lre.jpg"
+    },
+    {
+      "caption": "Grip - White lines will be bolder and stand out a lot more",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1787301502/i4zaiz6aifatzi6ctiyq.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1787301504/petgbeoejmbf0easjc0z.jpg"
+    }
+  ],
   "22628": [
     {
       "caption": "Colour of the fake being completely different. The side of the pins on each side are also significantly smaller on the real ",
