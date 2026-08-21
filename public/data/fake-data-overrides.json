@@ -592,6 +592,16 @@
     ],
     "authenticityNotes": "Callaway Mack Daddy and Jaws wedges are faked. Groove quality is everything — genuine machined grooves produce significantly more spin than the cast grooves found on fakes. Callaway verify serials via their customer service team."
   },
+  "22855": {
+    "fakeIndicators": [
+      "Groove precision is the most critical check — genuine Callaway Mack Daddy and Jaws wedges have precisely machined grooves with razor-sharp, uniform edges; fakes have cast grooves that are visibly less defined",
+      "Groove count, depth, and spacing should match the genuine specification — on fakes the bottom groove often starts higher on the face and individual grooves may be shallower or fewer",
+      "Satin or raw finish should be completely consistent across the sole and face — fakes have patchy plating or noticeably shinier areas",
+      "The MD or JAWS logo engraving should be deep and crisp with consistent depth — fakes have shallow, poorly defined engraving",
+      "Serial on hosel uniformly stamped — verify via Callaway customer service"
+    ],
+    "authenticityNotes": "Callaway Mack Daddy and Jaws wedges are faked. Groove quality is everything — genuine machined grooves produce significantly more spin than the cast grooves found on fakes. Callaway verify serials via their customer service team."
+  },
   "23015": {
     "fakeIndicators": [
       "Sole printing on G-series drivers should be gray-toned — fakes display a slightly brownish or yellowed tint that is obvious in direct comparison",
