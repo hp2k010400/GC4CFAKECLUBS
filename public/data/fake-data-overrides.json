@@ -602,6 +602,16 @@
     ],
     "authenticityNotes": "Titleist irons (T100, AP2, CB, MB, 716/718/620) are heavily counterfeited. The ferrule length and security label position are the two quickest checks. Genuine forged irons have a distinctive soft, dampened feel at impact that cast counterfeits cannot replicate."
   },
+  "23518": {
+    "fakeIndicators": [
+      "Inside the hosel of genuine Mizuno irons there are distinct adhesive-aid grooves clearly visible with a torch — fake hosels are smooth inside with barely visible or no grooves",
+      "Genuine Mizuno irons use a .355 taper-tip hosel — fakes substitute the more common .370 parallel tip, detectable by measurement or a professional fitter",
+      "The Grain Flow Forged or Grain Flow Forged HD stamp on the sole of forged models should be finely etched and precise — fakes reproduce this shallowly or with blurred lettering",
+      "Head weights must progress consistently 7-8g from long to short iron — fakes show inconsistent, illogical weight distribution with no clear pattern",
+      "The Mizuno logo in the cavity should be slightly recessed into the metal with crisp, uniform edges — counterfeits have logos flush with or standing proud of the surface"
+    ],
+    "authenticityNotes": "Mizuno irons are widely considered the gold standard for forged quality. The feel difference between genuine and counterfeit is immediately apparent — genuine Mizuno irons produce a butter-soft, dampened sensation at impact. The hosel internal grooves and .355 taper tip are reliable physical checks."
+  },
   "23615": {
     "fakeIndicators": [
       "Every genuine PING iron has a coloured dot on the hosel for custom lie angle fit — fakes often omit the dot entirely or use the wrong colour in the wrong position",
