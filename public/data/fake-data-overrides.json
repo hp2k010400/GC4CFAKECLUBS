@@ -870,6 +870,16 @@
     ],
     "authenticityNotes": "Callaway maintain a counterfeit warning page at callawaygolf.com/help/counterfeit-warning and will verify clubs by serial number. On modern carbon crown models (Epic, Rogue, Paradym series): tap the crown with a fingernail — genuine carbon produces a dull soft thud, not a metallic ring."
   },
+  "24994": {
+    "fakeIndicators": [
+      "The Qi35 carbon face should produce a soft thud when tapped with a fingernail — a metallic ring indicates painted metal",
+      "Serial TM25D + 7 digits on hosel, laser-etched — shallow or wrong format = fake",
+      "Sole printing crisp with no bleed on loft/flex markings — fakes show bleeding",
+      "Clubhead weight within 2g of published spec — fakes vary 5-10g",
+      "Stock shaft carries manufacturer's serial near tip — fakes use unbranded blanks"
+    ],
+    "authenticityNotes": "TaylorMade drivers are among the most counterfeited clubs in the world. TaylorMade offer authenticity checks via taylormadegolf.com — contact support with the serial number to verify. On modern carbon face models (Stealth, Qi series), tapping the face with a fingernail should produce a dull soft thud, not a metallic ring."
+  },
   "24996": {
     "fakeIndicators": [
       "The Qi35 carbon face should produce a soft thud when tapped with a fingernail — a metallic ring indicates painted metal",
