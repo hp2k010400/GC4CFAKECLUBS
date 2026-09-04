@@ -930,6 +930,16 @@
     ],
     "authenticityNotes": "TaylorMade drivers are among the most counterfeited clubs in the world. TaylorMade offer authenticity checks via taylormadegolf.com — contact support with the serial number to verify. On modern carbon face models (Stealth, Qi series), tapping the face with a fingernail should produce a dull soft thud, not a metallic ring."
   },
+  "25090": {
+    "fakeIndicators": [
+      "The P790 uses a hollow SpeedFoam-filled cavity — genuine irons produce a distinctive hollow, slightly dampened sound at impact; fakes sound like solid cast irons",
+      "Serial on each iron's hosel in TM + year + I + 7 digit format — fakes have wrong format or shallowly scratched serials",
+      "Ferrule length consistent across the set — fakes use shorter, generic ferrules",
+      "Chrome finish perfectly consistent with no visible casting seams or lines across the set",
+      "Head weight progression consistent 7-8g from long to short iron — fakes are inconsistent"
+    ],
+    "authenticityNotes": "TaylorMade irons (P-series, SIM, Qi) are regularly counterfeited. The P790 is particularly widely faked due to its hollow construction and high value. The chrome finish on genuine clubs is more uniform and refined than on counterfeits. Verify serial numbers via TaylorMade customer service."
+  },
   "25107": {
     "fakeIndicators": [
       "Serial on hosel must follow TM + 2-digit year + model letter + 7 digits, laser-etched — fakes have wrong format or shallowly scratched serials",
