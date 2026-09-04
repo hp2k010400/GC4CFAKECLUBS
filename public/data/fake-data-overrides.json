@@ -452,6 +452,16 @@
     ],
     "authenticityNotes": "PING operates a tightly controlled distribution network. Counterfeits primarily target G-series drivers. PING customer service will authenticate any club by serial number at ping.com."
   },
+  "20890": {
+    "fakeIndicators": [
+      "Serial on hosel must follow TM + 2-digit year + model letter + 7 digits, laser-etched — fakes have wrong format or shallowly scratched serials",
+      "TaylorMade wordmark uses a proprietary typeface — fakes have subtly different letter spacing or stroke weight",
+      "Paint fill on all markings should have crisp, uniform edges — fakes show bleeding paint or flat matte fill",
+      "Clubhead weight within 2g of published specification — fakes vary 5-10g",
+      "Stock shaft carries the shaft manufacturer's own serial near the tip — fakes use unbranded graphite blanks"
+    ],
+    "authenticityNotes": "Verify authenticity via TaylorMade customer service at taylormadegolf.com."
+  },
   "21410": {
     "fakeIndicators": [
       "XXIO drivers are exceptionally lightweight — genuine MP-1100 series shafts weigh under 45g; a noticeably heavier shaft confirms a generic blank installed in a fake",
