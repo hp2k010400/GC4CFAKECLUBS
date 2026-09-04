@@ -762,6 +762,16 @@
     ],
     "authenticityNotes": "Vokey wedges are widely faked. The dot-vs-dash between loft and bounce is the fastest check. Verify via Team Titleist."
   },
+  "24438": {
+    "fakeIndicators": [
+      "The Qi10 uses a 60X Carbon Twist Face — tap the face with a fingernail; genuine carbon produces a dull thud, not a metallic ring",
+      "The internal carbon rib structure visible through the aft crown should form a bifurcated pattern — if solid or differently shaped, the club is counterfeit",
+      "Serial TM24D + 7 digits on hosel, precisely laser-etched — fakes have shallowly stamped or incomplete serials",
+      "Sole printing should be crisp with no paint bleed — counterfeits show bleeding edges",
+      "Stock Fujikura Ventus shaft has manufacturer's serial near tip — fakes use unbranded blanks"
+    ],
+    "authenticityNotes": "TaylorMade drivers are among the most counterfeited clubs in the world. TaylorMade offer authenticity checks via taylormadegolf.com — contact support with the serial number to verify. On modern carbon face models (Stealth, Qi series), tapping the face with a fingernail should produce a dull soft thud, not a metallic ring."
+  },
   "24439": {
     "fakeIndicators": [
       "The Qi10 uses a 60X Carbon Twist Face — tap the face with a fingernail; genuine carbon produces a dull thud, not a metallic ring",
