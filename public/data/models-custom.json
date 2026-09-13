@@ -1,1 +1,20 @@
-[]
+[
+  {
+    "name": "Callaway X-Series 2006 Fairway Wood",
+    "model": "Callaway X-Series 2006 Fairway Wood",
+    "brand": "Callaway",
+    "year": 2006,
+    "productType": "Fairway Wood",
+    "hand": "Right-Handed",
+    "gender": "Mens",
+    "shaftMaterial": "",
+    "loft": "",
+    "description": "Callaway X-Series 2006 Fairway Wood",
+    "imageUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1789298829/agq51y7m2pqs1h2vysar.jpg",
+    "brandLogoUrl": "",
+    "fakeIndicators": [],
+    "authenticityNotes": "",
+    "serialNumberFormat": "",
+    "id": 1789298835425
+  }
+]
