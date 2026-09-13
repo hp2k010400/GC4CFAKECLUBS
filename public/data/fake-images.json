@@ -261,6 +261,23 @@
       "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1782825919/klqlft8p5ulfh3nkrgs7.jpg"
     }
   ],
+  "3041": [
+    {
+      "caption": "On the fake the writing of the Ping logo is smaller and not as bold as the real.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1789296301/an3p34nvhixspqqd93ac.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1789296304/qrztegrisytf2xgdtjck.jpg"
+    },
+    {
+      "caption": "The club number and loft of the club are 3D and stick out on the fake and is bolder on the fake too. ",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1789296308/mepgiqchyhtah6mvzugt.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1789296311/zrzj6zzkdvbflbhh8dem.jpg"
+    },
+    {
+      "caption": "The shaft on this was also a fake, was an 'Alta J' which was made for Japanese market and did not feel the same material as a normal real shaft.",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1789296315/ahicbfwfs5sg5bronxwf.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1789296318/xqejocdevulrkui13cnq.jpg"
+    }
+  ],
   "3176": [
     {
       "caption": "Shape of fake head is rounder, with the dot graphics much smaller, speed slot is thinner",
@@ -1959,6 +1976,11 @@
       "caption": "WEIGHTS - If they come out and show the number on the bottom (8G For Example) This is real",
       "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784714000/afmem6zdagudzzytodrs.png",
       "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1784714005/tbpqu1v9omtp8moil85f.png"
+    },
+    {
+      "caption": "MK - Leather on headcover feels different, cheap and not like leather, also the writing on LAB Golf on top on head as displayed below is bolder and smaller writing",
+      "realUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1789296135/gr9vr3ft30myhjrnojse.jpg",
+      "fakeUrl": "https://res.cloudinary.com/defmm2vll/image/upload/v1789296140/z9zhxsfcmw3vomhu56l4.jpg"
     }
   ],
   "24978": [
